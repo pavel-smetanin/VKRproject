@@ -1,0 +1,5 @@
+VKRproject.sln
+.vs
+VKRproject/bin
+VKRproject/obj
+VKRproject/wwwroot/lib
