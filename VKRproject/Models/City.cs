@@ -1,6 +1,7 @@
 ﻿namespace VKRproject.Models
 {
-    public class City
+    public class City : BaseCity
     {
+        public string DescrUrl { get; set; }
     }
 }

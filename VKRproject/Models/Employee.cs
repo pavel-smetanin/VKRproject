@@ -1,6 +1,7 @@
 ﻿namespace VKRproject.Models
 {
-    public class Employee
+    public class Employee : BasePeople
     {
+        public string Position { get; set; }
     }
 }
