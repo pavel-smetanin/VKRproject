@@ -24,7 +24,7 @@ namespace VKRproject.Tools
                 throw new Exception("Request is failed! " + ex.Message);
             }
         }
-        public static async Task<JObject[]> GetRequestWithJsonObject(string[] urls)
+        public static async Task<JObject[]> GetRequestWithJsonObjects(string[] urls)
         {
             try
             {

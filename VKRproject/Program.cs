@@ -1,3 +1,4 @@
+using VKRproject.Modules;
 /*
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,3 +28,7 @@ app.MapControllerRoute(
 
 app.Run();
 */
+var app = new DataUpdaterModule();
+await app.Run();
+Console.WriteLine("Updated!");
+Console.ReadKey();

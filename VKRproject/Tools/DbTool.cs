@@ -9,16 +9,39 @@ namespace VKRproject.Tools
         private static MySqlConnection Connection;
         static DbTool()
         {
-            Connection = new MySqlConnection($"Server=;Database=;port=;User Id=;password=");
+            Connection = new MySqlConnection("Server = localhost; Database = is_travel_agency; port = 3306; User Id = root; password = q1234as");
         }
+        public static void InitConnection(string connectionString)
+        {
+            Connection = new MySqlConnection(connectionString);
+        }
+        
         public static void ExcecuteQueryNonResult(string sqlStr)
         {
-            Connection.Open();
-
+            try
+            {
+                Connection.Open();
+                
+                MySqlCommand command = new MySqlCommand(sqlStr, Connection);
+                command.ExecuteNonQuery();
+                Connection.Close();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Query to DataBase is failed! " + ex.Message);
+            }
         }
         public static MySqlDataReader ExcecuteQueryWithResult(string sqlStr)
         {
-
+            try
+            {
+                //Connection.Open();
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
