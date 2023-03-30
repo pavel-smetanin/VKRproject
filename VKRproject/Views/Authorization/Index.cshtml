@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "/Views/Shared/_AuthLayout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TravelAgency</title>
+</head>
+<body>
+    <div>@ViewBag.Message</div>
+    <div>
+        <form class="form_auth_style" action="" method="post">
+            <p>
+                <label>Введите Ваш логин</label>
+                <input type = "text" name="login" placeholder="логин" required>
+            </p>
+            <p>
+                <label>Введите Ваш пароль</label>
+                <input type="password" name="password" placeholder="пароль" required>
+            </p>
+            <p>
+                <button class="form_auth_button">Войти</button>
+            </p>
+        </form>
+    </div>
+</body>
+</html>

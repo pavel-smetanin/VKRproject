@@ -1,5 +1,5 @@
 using VKRproject.Modules;
-/*
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -24,11 +24,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Authorization}/{action=Index}/{id?}");
 
 app.Run();
-*/
-var app = new DataUpdaterModule();
-await app.Run();
-Console.WriteLine("Updated!");
-Console.ReadKey();
