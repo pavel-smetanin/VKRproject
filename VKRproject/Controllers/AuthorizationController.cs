@@ -8,6 +8,7 @@ namespace VKRproject.Controllers
 {
     public class AuthorizationController : Controller
     {
+
         public IActionResult Index()
         {
             return View();
@@ -23,11 +24,12 @@ namespace VKRproject.Controllers
             AuthorizationModule authModule = new AuthorizationModule();
             if (authModule.CheckAuth(login, password))
             {
-                return RedirectPermanent("Home/Index");
+                authModule.InitUser(login, password);
+                return RedirectPermanent("Search/Search");
             }
             else
             {
-                ViewBag.Message = "Не верный логин или пароль!";
+                ViewBag.Message = "Неверный логин или пароль!";
                 return View();
             }
 

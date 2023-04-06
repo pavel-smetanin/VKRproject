@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Nodes;
+﻿using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 
 namespace VKRproject.Models
 {
@@ -18,9 +19,19 @@ namespace VKRproject.Models
         public int NightsCount { get; set; }
         public int AdultsCount { get; set; }
         public int ChildCount { get; set; }
-        public JsonArray OpLinks { get; set; }
+        public JArray OpLinks { get; set; }
         public string ImgLink { get; set; }
         public DepCity DepCity { get; set; }
         public int Price { get; set; }
+        public Tour()
+        {
+            TourOperator = new TourOperator();
+            Hotel = new Hotel();
+            City = new City();
+            Country = new Country();
+            MealType = new ModelType();
+            AccomType = new ModelType();
+            DepCity = new DepCity();
+        }
     }
 }

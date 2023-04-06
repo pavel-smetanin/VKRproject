@@ -57,12 +57,13 @@ namespace VKRproject.Tools
         {
             try
             {
-                //Connection.Open();
-                return null;
+                MySqlCommand command = new MySqlCommand(sqlStr, Connection);
+                var result = command.ExecuteReader();
+                return result;
             }
-            catch
+            catch(Exception ex)
             {
-                return null;
+                throw new Exception("Query to Data Base with reader result is failed! Maybe you need to open connection " + ex.Message);
             }
         }
         public static object ExcecuteQueryWithScalar(string sqlStr) 
