@@ -8,10 +8,11 @@ namespace VKRproject.Modules
     {
         public async Task Run()
         {
-           // DeleteData();
-           // await UpdateCities();
-           // await UpdateHotels();
+            DeleteData();
+            //await UpdateCities();
+            //await UpdateHotels();
             await UpdateTours();
+            Console.WriteLine(DateTime.Now + " DataUpdater: the data of tours is update!");
         }
 
         private void DeleteData()
@@ -21,7 +22,7 @@ namespace VKRproject.Modules
                 string citiesTable = "cities_data";
                 string hotelsTable = "hotels_data";
                 string toursTable = "tours_data";
-                string sqlStr = $"DELETE FROM {toursTable}; DELETE FROM {hotelsTable}; DELETE FROM {citiesTable};";
+                string sqlStr = $"DELETE FROM {toursTable};"; //DELETE FROM {hotelsTable}; DELETE FROM {citiesTable};";
                 DbTool.ExcecuteQueryNonResult(sqlStr);
             }
             catch(Exception ex)

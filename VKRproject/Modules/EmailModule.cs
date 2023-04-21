@@ -10,8 +10,8 @@ namespace VKRproject.Modules
         {
             try
             {
-                string sendEmail = "p.smetanin.001@gmail.com";
-                string password = "ahbsareluksswsxi";
+                string sendEmail = "";
+                string password = "";
                 string name = "TravelAgency";
                 MailAddress sendAdress = new MailAddress(sendEmail, name);
                 MailAddress destAdress = new MailAddress(destEmail);

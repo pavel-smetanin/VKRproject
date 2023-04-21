@@ -10,18 +10,7 @@ namespace VKRproject.Modules
         public List<Tour> GetToursListByFilter(Filter filter)
         {
             try
-            {/*
-                Filter filter = new Filter
-                {
-                    CountryId = 40,
-                    DateLower = DateOnly.Parse("01.02.2014"),
-                    DateUpper = DateOnly.Parse("28.02.2014"),
-                    NightsCount = 13,
-                    AdultsCount = 2,
-                    ChildCount = 0,
-                    PriceLower = 1000,
-                    PriceUpper = 100000
-                };*/
+            {
                 List<Tour> toursListResult = new List<Tour>();
                 string tableName = "tours_data";
                 string sql = $"SELECT t.ID, t.op_id, op.name, t.hotel_id, t.city_id, c_d.name, t.country_id, c.name, t.name, t.room, t.meal_code, t.accom_code," +
