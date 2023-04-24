@@ -22,18 +22,24 @@ namespace VKRproject.Controllers
         }
 
         [HttpGet]
-        public IActionResult Search(Filter filter)
+        public IActionResult Index(Filter filter)
         {
             if (AuthUser == null)
-                return RedirectPermanent("Authorization/Index");
+                return RedirectPermanent("~/Authorization/Index");
             ViewBag.UserInfo = $"{AuthUser.Employee.LastName} {AuthUser.Employee.FirstName} {AuthUser.Employee.PatrName} {AuthUser.Employee.Position}";
             SearchModule module = new SearchModule();
             Model.Tours = module.GetToursListByFilter(filter);
             return View(Model);
         }
-        
+        /*[HttpGet]
+        public IActionResult Index()
+        {
+            if (AuthUser == null)
+                return RedirectPermanent("Authorization/Index");
+            return View(Model);
+        }*/
         [HttpPost]
-        public async Task<IActionResult> Search(string email)
+        public async Task<IActionResult> Index(string email)
         {
             EmailModule module = new EmailModule();
             var tours = Model.Tours;

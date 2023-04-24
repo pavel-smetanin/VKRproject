@@ -1,8 +1,140 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model SearchViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Вы успешно авторизовались!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    table{
+        border: 1px black;
+    }
+    td {
+        padding: 5px;
+    }
+
+    tr:nth-child(even) {
+        background: #CCC
+    }
+
+    tr:nth-child(odd) {
+        background: #FFF
+    }
+</style>
+<script>
+    function change(objName, min, max, step) {
+        var obj = document.getElementById(objName);
+        var tmp = +obj.value + step;
+        if (tmp<min) tmp=min;
+        if (tmp>max) tmp=max;
+        obj.value = tmp;
+    }
+</script>
+<header>
+    <div>Тукущий пользователь</div>
+    <div>@ViewBag.UserInfo</div>
+</header>
+<div>
+    <form class="" method="get">
+        <p>
+            <label>Направление (страна)</label>
+            <select name="CountryId">
+                @foreach(var c in Model.Countries)
+                {
+                    <option value="@c.ID">@c.Name</option>
+                }
+            </select>
+        </p>
+        <p>
+            <label>Период даты вылета</label><br/>
+            <label>C</label>
+            <input type="date" name="DateLower"/>
+            <label>До</label>
+            <input type="date" name="DateUpper"/>
+        </p>
+        <p>
+            <label>Количество ночей</label>
+            <input type="button" value="+" onClick="change('night',0,100, 1);" />
+            <input id="night" type="number" value="1" name= "NightsCount"/>
+            <input type="button" value="-" onClick="change('night',0,10,-1);" />
+        </p>
+        <p>
+            <label>Количество туристов</label><br/>
+            <label>Взрослых</label>
+            <input type="button" value="+" onClick="change('adult',0,10, 1);" />
+            <input id="adult" type="number" value="1" name="AdultsCount"/>
+            <input type="button" value="-" onClick="change('adult',0,10,-1);" />
+            <label>Детей</label>
+            <input type="button" value="+" onClick="change('child',0,10, 1);" />
+            <input id="child" type="number" value="0" name="ChildCount" />
+            <input type="button" value="-" onClick="change('child',0,10,-1);" />
+        </p>
+        <p>
+            <label>Цена</label><br />
+            <label>От</label>
+            <input type = "number" min="0" name="PriceLower"/>
+            <label>До</label>
+            <input type="number" min="100000" name="PriceUpper"/>
+        </p>
+        <p>
+            <button class="form_auth_button">Найти</button>
+        </p>
+    </form>
 </div>
+<div>
+    @if (Model.Tours.Count > 0)
+    {
+        <p>Количество найденных туров @Model.Tours.Count</p>
+        <form method="post">
+            <p>
+                <label>Отправить подборку</label>
+            </p>
+            <p>
+                <label>На email</label>
+                <input type = "email" name="email"/>
+                <button>Отправить подборку на email</button>
+            </p>
+            <p>@ViewBag.EmailMessage</p>
+        </form>
+        <table>
+            <tr><th>ID тура</th>
+                <th>Туроператора</th>
+                <th>ID отеля</th>
+                <th>Город</th>
+                <th>Направление (страна)</th>
+                <th>Название тура</th>
+                <th>Тип номера</th>
+                <th>Тип питания</th>
+                <th>Тип размещения</th>
+                <th>Дата вылета</th>
+                <th>Дата вылета обратно</th>
+                <th>Количество ночей</th>
+                <th>Количество взрослых</th>
+                <th>Количество детей</th>
+                <th>Ссылка на тур</th>
+                <th>Ссылка на изображение</th>
+                <th>Город вылета</th>
+                <th>Цена (руб.)</th>
+            </tr>
+            @foreach (var t in Model.Tours)
+            {
+                <tr>
+                    <td>@t.ID</td>
+                    <td>@t.TourOperator.Name</td>
+                    <td>@t.Hotel.ID</td>
+                    <td>@t.City.Name</td>
+                    <td>@t.Country.Name</td>
+                    <td>@t.Name</td>
+                    <td>@t.Room</td>
+                    <td>@t.MealType.Code</td>
+                    <td>@t.AccomType.Code</td>
+                    <td>@t.DateStart</td>
+                    <td>@t.DateFinish</td>
+                    <td>@t.NightsCount</td>
+                    <td>@t.AdultsCount</td>
+                    <td>@t.ChildCount</td>
+                    <td><a src="https:/@t.OpLinks">Перейти к бронированию</a></td>
+                    <td><img src="@t.ImgLink"/></td>
+                    <td>@t.DepCity.Name</td>
+                    <td>@t.Price</td>
+                </tr>
+            }
+        </table>
+    }
+</div>
+

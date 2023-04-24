@@ -25,7 +25,7 @@ namespace VKRproject.Controllers
             if (authModule.CheckAuth(login, password))
             {
                 authModule.InitUser(login, password);
-                return RedirectPermanent("Search/Search");
+                return RedirectPermanent("~/Search/Index");
             }
             else
             {

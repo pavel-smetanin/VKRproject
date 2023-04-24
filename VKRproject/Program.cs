@@ -1,8 +1,8 @@
 using VKRproject.Modules;
 using VKRproject.Models;
 
-/*DataUpdaterModule module = new DataUpdaterModule();
-await module.Run();
+//DataUpdaterModule module = new DataUpdaterModule();
+//await module.Run();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,9 +28,9 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Authorization}/{action=Index}");
+    pattern: "{controller=Question}/{action=Index}");
 
-app.Run();*/
+app.Run();
 
-TelegramModule module = new TelegramModule();
-module.Run();
+//TelegramModule module = new TelegramModule();
+//module.Run();

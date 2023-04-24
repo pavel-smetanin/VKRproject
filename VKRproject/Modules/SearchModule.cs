@@ -20,7 +20,7 @@ namespace VKRproject.Modules
                     $"JOIN countries c ON t.country_id = c.ID " +
                     $"JOIN dep_cities d ON t.dep_city_id = d.ID " +
                     $"WHERE t.country_id = {filter.CountryId} AND " +
-                    $"(date_start >= STR_TO_DATE('{filter.DateLower}', '%Y-%m-%d') AND date_start <= STR_TO_DATE('{filter.DateUpper}', '%Y-%m-%d')) AND " +
+                    $"(date_start >= STR_TO_DATE('{filter.DateLower}', '%d.%m.%Y') AND date_start <= STR_TO_DATE('{filter.DateUpper}', '%d.%m.%Y')) AND " +
                     $"nights_count <= {filter.NightsCount} AND adults_count = {filter.AdultsCount} AND child_count = {filter.ChildCount} AND " +
                     $"(price >= {filter.PriceLower} AND price <= {filter.PriceUpper}) ORDER BY date_start DESC;";
                 string sql2 = $"SELECT * FROM {tableName} WHERE country_id = 40 LIMIT 5;";
