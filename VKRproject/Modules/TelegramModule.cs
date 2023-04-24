@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Net.Sockets;
-using System.Runtime.ConstrainedExecution;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Args;
-using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using VKRproject.Models;
 using VKRproject.Tools;
@@ -13,7 +9,7 @@ namespace VKRproject.Modules
 {
     public class TelegramModule
     {
-        private static string Token  = "5437015273:AAEe-eZmOfZ_5EmvrTwdEVTvAmYXm5kyKNg";
+        private static string Token  = "TOKEN";
         public static string BotUrl { get; private set; } = "https://t.me/VKRprojectQuestionBot";
         private TelegramBotClient Client { get; set; }
         public QuestionFilter Filter { get; private set; }
@@ -29,18 +25,22 @@ namespace VKRproject.Modules
             DialogStatus = 0;
             Code = GenerateCode();
             Countries = ModelTool.GetCountriesFromDb();
-            Console.WriteLine("Count of countries: " + Countries.Count + " Press <enter>");
-            Console.ReadLine();
+            
         }
-        public void Run()
+        public void StartBot()
         {
             Client.StartReceiving();
             Client.OnMessage += Client_OnMessage;
             Client.OnCallbackQuery += Client_OnCallbackQuery;
             Console.WriteLine("Запущен бот " + Client.GetMeAsync().Result.FirstName);
             Console.WriteLine("Код: " + Code);
-            Console.ReadLine();
-            Client.StopReceiving();
+            
+        }
+        public void FinishBot()
+        {
+            if(Client.IsReceiving)
+                Client.StopReceiving();
+            return;
         }
 
         private async void Client_OnCallbackQuery(object? sender, CallbackQueryEventArgs e)
@@ -203,7 +203,6 @@ namespace VKRproject.Modules
                         }
                         return;
                     }
-                    
                 }
                 else
                 {
@@ -221,41 +220,10 @@ namespace VKRproject.Modules
                 buttons.Add(new[] { InlineKeyboardButton.WithCallbackData(c.Name, c.ID.ToString()) });
             }
             var kbMurkup = new InlineKeyboardMarkup(buttons);
-            /*var kbrd = new InlineKeyboardMarkup(new InlineKeyboardButton[][]
-            {
-                new []  {
-                        InlineKeyboardButton.WithCallbackData("Турция", "1")
-                        },
-                new[]
-                {
-                    InlineKeyboardButton.WithCallbackData("Египет", "2")
-                },
-                new[]
-                {
-                    InlineKeyboardButton.WithCallbackData("Россия", "3")
-                }
-            });*/
+           
             return kbMurkup;
         }
-        public static ReplyKeyboardMarkup GetButtonKeyboard()
-        {
 
-            var kbrd = new ReplyKeyboardMarkup(new KeyboardButton[][]
-            {
-        new []  {
-                new KeyboardButton("1")
-                },
-        new[]
-        {
-            new KeyboardButton("2")
-        },
-        new[]
-        {
-            new KeyboardButton("3")
-        }
-            });
-            return kbrd;
-        }
         public int GenerateCode()
         {
             Random rnd = new Random();

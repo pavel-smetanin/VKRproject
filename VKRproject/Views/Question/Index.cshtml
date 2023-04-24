@@ -1,0 +1,84 @@
+﻿@model SearchViewModel
+<div>
+    <label>Анкета через телеграм бот</label>
+    <button onclick="location.href = '@Url.Action("Start", "Question")'">Открыть анкету</button>
+    <button onclick="location.href = '@Url.Action("Finish", "Question")'">Закрыть анкету</button>
+</div>
+<div>
+    @if(ViewBag.Code != null)
+    {
+        <label>Бот активирован</label>
+        <label>Код активации анкеты: @ViewBag.Code</label>
+        
+    }
+</div>
+<div>
+    @if (ViewBag.ResultMessage != null)
+    {
+        <label>@ViewBag.ResultMessage</label>
+    }
+</div>
+
+<div>
+    @if (Model != null && Model.Tours != null)
+    {
+        <p>Сессия анкеты закрыта</p>
+        <p>Количество найденных туров @Model.Tours.Count</p>
+        <form method="post">
+            <p>
+                <label>Отправить подборку</label>
+            </p>
+            <p>
+                <label>На email</label>
+                <input type="email" name="email" />
+                <button>Отправить подборку на email</button>
+            </p>
+            <p>@ViewBag.EmailMessage</p>
+        </form>
+        <table>
+            <tr>
+                <th>ID тура</th>
+                <th>Туроператора</th>
+                <th>ID отеля</th>
+                <th>Город</th>
+                <th>Направление (страна)</th>
+                <th>Название тура</th>
+                <th>Тип номера</th>
+                <th>Тип питания</th>
+                <th>Тип размещения</th>
+                <th>Дата вылета</th>
+                <th>Дата вылета обратно</th>
+                <th>Количество ночей</th>
+                <th>Количество взрослых</th>
+                <th>Количество детей</th>
+                <th>Ссылка на тур</th>
+                <th>Ссылка на изображение</th>
+                <th>Город вылета</th>
+                <th>Цена (руб.)</th>
+            </tr>
+            @foreach (var t in Model.Tours)
+            {
+                <tr>
+                    <td>@t.ID</td>
+                    <td>@t.TourOperator.Name</td>
+                    <td>@t.Hotel.ID</td>
+                    <td>@t.City.Name</td>
+                    <td>@t.Country.Name</td>
+                    <td>@t.Name</td>
+                    <td>@t.Room</td>
+                    <td>@t.MealType.Code</td>
+                    <td>@t.AccomType.Code</td>
+                    <td>@t.DateStart</td>
+                    <td>@t.DateFinish</td>
+                    <td>@t.NightsCount</td>
+                    <td>@t.AdultsCount</td>
+                    <td>@t.ChildCount</td>
+                    <td><a src="https:/@t.OpLinks">Перейти к бронированию</a></td>
+                    <td><img src="@t.ImgLink" /></td>
+                    <td>@t.DepCity.Name</td>
+                    <td>@t.Price</td>
+                </tr>
+            }
+        </table>
+    }
+</div>
