@@ -1,6 +1,7 @@
 using VKRproject.Modules;
 using VKRproject.Models;
-
+using VKRproject.Tools;
+/*
 //DataUpdaterModule module = new DataUpdaterModule();
 //await module.Run();
 
@@ -34,3 +35,6 @@ app.Run();
 
 //TelegramModule module = new TelegramModule();
 //module.Run();
+*/
+Console.WriteLine(ConfigProvider.ApiCongig.GetSection("tours").Get<string[]>().Length);
+Console.ReadKey();

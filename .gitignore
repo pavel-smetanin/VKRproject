@@ -3,4 +3,5 @@ VKRproject.sln
 VKRproject/bin
 VKRproject/obj
 VKRproject/wwwroot/lib
+VKRproject/Properties/privateConfig.json
 
