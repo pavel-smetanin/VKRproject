@@ -30,7 +30,7 @@ namespace VKRproject.Controllers
                 ViewModel = new SearchViewModel();
                 var filter = Filter.FromQuestionFilterToFilter(BotModule.Filter);
                 SearchModule module = new SearchModule();
-                var tours = module.GetToursListByFilter(filter);
+                var tours = module.SearchToursByFilter(filter);
                 ViewModel.Tours = tours;
                 return View("Index", ViewModel);
             }

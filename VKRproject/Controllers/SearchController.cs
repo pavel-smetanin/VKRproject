@@ -28,7 +28,7 @@ namespace VKRproject.Controllers
                 return RedirectPermanent("~/Authorization/Index");
             ViewBag.UserInfo = $"{AuthUser.Employee.LastName} {AuthUser.Employee.FirstName} {AuthUser.Employee.PatrName} {AuthUser.Employee.Position}";
             SearchModule module = new SearchModule();
-            Model.Tours = module.GetToursListByFilter(filter);
+            Model.Tours = module.SearchToursByFilter(filter);
             return View(Model);
         }
         /*[HttpGet]

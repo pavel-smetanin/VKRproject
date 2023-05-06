@@ -1,7 +1,7 @@
 using VKRproject.Modules;
 using VKRproject.Models;
 using VKRproject.Tools;
-/*
+
 //DataUpdaterModule module = new DataUpdaterModule();
 //await module.Run();
 
@@ -29,12 +29,10 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Question}/{action=Index}");
+    pattern: "{controller=ClientSearch}/{action=Index}");
 
 app.Run();
 
 //TelegramModule module = new TelegramModule();
 //module.Run();
-*/
-Console.WriteLine(ConfigProvider.ApiCongig.GetSection("tours").Get<string[]>().Length);
-Console.ReadKey();
+
