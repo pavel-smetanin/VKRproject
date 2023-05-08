@@ -7,18 +7,14 @@ namespace VKRproject.Modules
 {
     public class SearchModule
     {
-        private string sqlTabJoin = "SELECT t.ID, t.op_id, op.name, t.hotel_id, t.city_id, c_d.name, t.country_id, c.name, t.name, t.room, t.meal_code, t.accom_code," +
-                    "t.date_start, t.date_finish, t.nights_count, t.adults_count, t.child_count, t.op_links, t.img_link, t.dep_city_id, d.name, t.price " +
-                    "FROM tours_data t JOIN tour_operators op ON t.op_id = op.ID " +
-                    "JOIN cities_data c_d ON t.city_id = c_d.ID " +
-                    "JOIN countries c ON t.country_id = c.ID " +
-                    "JOIN dep_cities d ON t.dep_city_id = d.ID ";
+        private string toursTab = "tours_data";
+        private string toursArchiveTab = "tours_archive";
         public List<Tour> SearchToursByFilter(Filter filter)
         {
             try
             {
                 List<Tour> toursListResult = new List<Tour>();
-                string sql = sqlTabJoin + $"WHERE t.country_id = {filter.CountryId} AND " +
+                string sql = GetSqlTabJoin(toursTab) + $"WHERE t.country_id = {filter.CountryId} AND " +
                     $"(date_start >= STR_TO_DATE('{filter.DateLower}', '%d.%m.%Y') AND date_start <= STR_TO_DATE('{filter.DateUpper}', '%d.%m.%Y')) AND " +
                     $"nights_count <= {filter.NightsCount} AND adults_count = {filter.AdultsCount} AND child_count = {filter.ChildCount} AND " +
                     $"(price >= {filter.PriceLower} AND price <= {filter.PriceUpper}) ORDER BY date_start DESC;";
@@ -33,7 +29,7 @@ namespace VKRproject.Modules
         public List<Tour> SearchToursByFilter(QuestionFilter filter)
         {
             List<Tour> toursListResult = new List<Tour>();
-            string sql = sqlTabJoin + $"WHERE t.country_id = {filter.CountryID} AND " +
+            string sql = GetSqlTabJoin(toursTab) + $"WHERE t.country_id = {filter.CountryID} AND " +
                 $"(date_start >= STR_TO_DATE('{filter.StartDateLower}', '%d.%m.%Y') AND date_start <= STR_TO_DATE('{filter.StartDateUpper}', '%d.%m.%Y')) AND " +
                 $"date_finish <= {filter.EndDate} AND " +
                 $"nights_count <= {filter.NightsCount} AND adults_count = {filter.AdultsCount} AND child_count = {filter.ChildCount} AND " +
@@ -45,9 +41,16 @@ namespace VKRproject.Modules
         public List<Tour> SearchToursByFilter(TourStatFilter filter)
         {
             List<Tour> toursListResult = new List<Tour>();
-            string sql = sqlTabJoin + $"WHERE t.country_id IN ({ListInStr<int>(filter.CountryIdList)}) AND " +
+            string sql = GetSqlTabJoin(toursTab) + $"WHERE t.country_id IN ({ListInStr<int>(filter.CountryIdList)}) AND " +
                 $"(nights_count <= {filter.NightsCount} OR adults_count <= {filter.AdultsCount} OR child_count <= {filter.ChildCount} OR " +
                 $"price <= {filter.Price}) ORDER BY date_start DESC;";
+            toursListResult = GetToursListFromDb(sql);
+            return toursListResult;
+        }
+        public List<Tour> SearchToursByClientOrder(int clientId)
+        {
+            List<Tour> toursListResult = new List<Tour>();
+            string sql = GetSqlTabJoin(toursArchiveTab) + $"JOIN orders_archive o ON t.ID = o.tour_id WHERE o.client_id = {clientId} ORDER BY o.order_date DESC;";
             toursListResult = GetToursListFromDb(sql);
             return toursListResult;
         }
@@ -99,6 +102,15 @@ namespace VKRproject.Modules
             }
             result = result.TrimEnd(',');
             return result;
+        }
+        private string GetSqlTabJoin(string tabName)
+        {
+            return "SELECT t.ID, t.op_id, op.name, t.hotel_id, t.city_id, c_d.name, t.country_id, c.name, t.name, t.room, t.meal_code, t.accom_code," +
+                    "t.date_start, t.date_finish, t.nights_count, t.adults_count, t.child_count, t.op_links, t.img_link, t.dep_city_id, d.name, t.price " +
+                    $"FROM {tabName} t JOIN tour_operators op ON t.op_id = op.ID " +
+                    "JOIN cities_data c_d ON t.city_id = c_d.ID " +
+                    "JOIN countries c ON t.country_id = c.ID " +
+                    "JOIN dep_cities d ON t.dep_city_id = d.ID ";
         }
     }
 }

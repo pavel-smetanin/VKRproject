@@ -9,10 +9,10 @@ namespace VKRproject.Modules
     public class ClientSearchModule
     {
         private string tabClients = "clients_archive";
-        public List<Client> SearchClient(string lastname, string firstname = "", string patrname = "", string birthDate = "")
+        public List<Client> SearchClient(string lastname, string firstname = "", string patrname = "", string birthDate = "0000.00.00")
         {
             List<Client> results = new List<Client>();
-            string sql = $"SELECT * FROM {tabClients} WHERE last_name = '{lastname}' OR first_name = '{firstname}' OR patr_name = '{patrname}' OR = '{birthDate}';";
+            string sql = $"SELECT * FROM {tabClients} WHERE last_name = '{lastname}' OR first_name = '{firstname}' OR patr_name = '{patrname}' OR birth_date = '{birthDate}';";
             results = GetClientsListFromDb(sql);
             return results;
         }
@@ -30,11 +30,11 @@ namespace VKRproject.Modules
             results = GetClientsListFromDb(sql);
             return results;
         }
-        public List<TourStat> GetTourStatsByClient(Client client)
+        public List<TourStat> GetTourStatsByClientId(int clientId)
         {
             List<TourStat> results = new List<TourStat>();
             string sql = $"SELECT t.ID, t.country_id, t.nights_count, t.adults_count, t.child_count, t.price, o.client_rate " +
-                $"FROM tours_archive t JOIN orders_archive o ON t.ID = o.tour_id WHERE o.client_id = {client.ID};";
+                $"FROM tours_archive t JOIN orders_archive o ON t.ID = o.tour_id WHERE o.client_id = {clientId};";
             DbTool.OpenDbConnection();
             var reader = DbTool.ExcecuteQueryWithResult(sql);
             if (reader.HasRows)

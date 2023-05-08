@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using VKRproject.Models;
+using VKRproject.Models.ViewModels;
 using VKRproject.Modules;
 using VKRproject.Tools;
 

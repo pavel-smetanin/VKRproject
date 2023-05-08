@@ -1,30 +1,76 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
+@model ClientSearchViewModel
+
 <div>
-    <form class="" method="post">
-        <label>Фамилия</label>
-        <input type="text" name="lastname"/>
-        <label>Имя</label>
-        <input type="text" name="firstname"/>
-        <label>Отчетство</label>
-        <input type="text" name="patrname" />
-        <label>Дата рождения</label>
-        <input type="date" name="birthdate">
-        <button>Найти клиента</button>
-    </form>
-    <form class="" method="post">
-        <label>Номера клиента ID</label>
-        <input type="date" name="ID">
-        <button>Найти клиента по ID</button>
-    </form>
-    <form class="" method="post">
-        <label>Email</label>
-        <input type="email" name="email">
-        <label>Номер телефона</label>
-        <input type="text" name="phone">
-        <button>Найти клиента по контактным данным</button>
-    </form>
+    <p>
+        <form class="" method="post" action="@Url.Action("SearchByFio", "ClientSearch")">
+            <label>Фамилия</label>
+            <input type="text" name="lastname"/>
+            <label>Имя</label>
+            <input type="text" name="firstname" value=""/>
+            <label>Отчетство</label>
+            <input type="text" name="patrname" value="" />
+            <label>Дата рождения</label>
+            <input type="date" name="birthdate" value="00.00.0000">
+            <button>Найти клиента</button>
+        </form>
+    </p>
+    <p>
+        <form class="" method="post" action="@Url.Action("SearchById", "ClientSearch")">
+            <label>Номера клиента ID</label>
+            <input type="number" name="id">
+            <button>Найти клиента по ID</button>
+        </form>
+    </p>
+    <p>
+        <form class="" method="post" action="@Url.Action("SearchByContact", "ClientSearch")">
+            <label>Email</label>
+            <input type="email" name="email">
+            <label>Номер телефона</label>
+            <input type="text" name="phone">
+            <button>Найти клиента по контактным данным</button>
+        </form>
+    </p>
+</div>
+<div>
+    @if (Model != null)
+    {
+        @if (Model.Clients.Count > 0)
+        {
+            <p>Количество найденных клиентов: @Model.Clients.Count</p>
+            <table>
+                <tr>
+                    <th>Номер клиента ID</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Дата рождения</th>
+                    <th>Email</th>
+                    <th>Телефон</th>
+                </tr>
+                @foreach (var c in Model.Clients)
+                {
+                    <tr>
+                        <td>@c.ID</td>
+                        <td>@c.LastName</td>
+                        <td>@c.FirstName</td>
+                        <td>@c.PatrName</td>
+                        <td>@c.BirthDate.ToString()</td>
+                        <td>@c.Email</td>
+                        <td>@c.Phone</td>
+                        <td><a href="~/ClientSearch/Archive?id=@c.ID">Просмотреть историю</a></td>
+                        <td>
+                            <label>Учитывать оценку клиента по туру</label>
+                            <input type="checkbox" value="false" id = "rateFlag">
+                            <a href="~/ClientSearch/Result?id=@c.ID">Подобрать туры по истории</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>Клиенты с заданными параметранми не найдены</p>
+        }
+    }
 </div>

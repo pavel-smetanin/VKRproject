@@ -1,4 +1,6 @@
-namespace VKRproject.Models
+using VKRproject.Models;
+
+namespace VKRproject.Models.ViewModels
 {
     public class ErrorViewModel
     {

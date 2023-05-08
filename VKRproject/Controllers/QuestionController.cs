@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VKRproject.Models;
+using VKRproject.Models.ViewModels;
 using VKRproject.Modules;
 
 namespace VKRproject.Controllers
