@@ -1,0 +1,92 @@
+﻿@model AnalyticViewModel
+<h1>Аналитика по турам</h1>
+<div>
+    <label>Время: @DateTime.Now</label>
+    <label>Последнее обновление базы туров: @ViewBag.DateUpdate</label>
+    <label>Источник данных по турам: <a href="https://sletat.ru">SletatRuAPI</a></label>
+</div>
+<div>
+    <h2>Общая статистика</h2>
+    <p>Последнее обновление базы туров: @ViewBag.DateUpdate</p>
+    <p>Последнее обновление локальной базы туров: </p>
+    <p>Общее количество туров в локальной базе: @ViewBag.GeneralToursCount</p>
+    <p>Среднее количество ночей в туре: @ViewBag.GeneralAvgNights</p>
+    <p>Средняя стоимость тура: @ViewBag.GeneralAvgPrice</p>
+</div>
+<div>
+    <h2>Распределение туров</h2>
+    @if(Model.CountriesDict != null)
+    {
+        <div>
+            <h3>Количество туров для каждой страны</h3>
+            <table>
+                <tr>
+                    <th>Страна</th>
+                    <th>Количество туров</th>
+                </tr>
+            
+                @foreach(var c in Model.CountriesDict)
+                {
+                    <tr>
+                        <td>@c.Key</td>
+                        <td>@c.Value</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    @if(Model.OperatorsDict != null)
+    {
+        <div>
+            <h4>Количество туров для каждого оператора</h4>
+            <table>
+                <tr>
+                    <th>Страна</th>
+                    <th>Количество туров</th>
+                </tr>
+
+                @foreach (var o in Model.OperatorsDict)
+                {
+                    <tr>
+                        <td>@o.Key</td>
+                        <td>@o.Value</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+</div>
+<div>
+    <h2>Минимальные и максимальные показатели</h2>
+    <div>
+        <label>Максимальное количество ночей: @Model.MaxNightsCount.Value</label>
+        <label>Тур: @Model.MaxNightsCount.Key</label>
+    </div>
+    <div>
+        <label>Минимальное количество ночей: @Model.MinNightsCount.Value</label>
+        <label>Тур: @Model.MinNightsCount.Key</label>
+    </div>
+    <div>
+        <label>Максимальная стоимость тура: @Model.MaxPrice.Value</label>
+        <label>Тур: @Model.MaxPrice.Key</label>
+    </div>
+    <div>
+        <label>Минимальная стоимость тура: @Model.MinPrice.Value</label>
+        <label>Тур: @Model.MinPrice.Key</label>
+    </div>
+</div>
+<div>
+    <h2>Показатели актуальности (с наибольшим количеством туров)</h2>
+    <div>
+        <label>Актуальное направление (страна): @Model.MaxCountry.Key</label>
+        <label>Количество туров: @Model.MaxCountry.Value</label>
+    </div>
+    <div>
+        <label>Актуальный город: @Model.MaxCity.Key</label>
+        <label>Количество туров: @Model.MaxCity.Value</label>
+    </div>
+    <div>
+        <label>Актуальный отель: @Model.MaxHotel.Key</label>
+        <label>Количество туров: @Model.MaxHotel.Value</label>
+    </div>
+</div>
