@@ -9,27 +9,43 @@ namespace VKRproject.Modules
     {
         private string toursTab = "tours_data";
         private string toursArchiveTab = "tours_archive";
-        public List<Tour> SearchToursByFilter(Filter filter)
+        public List<ShortTour> SearchToursByFilter(Filter filter)
         {
-            try
+
+            List<ShortTour> shortTours = new List<ShortTour>();
+            string sql = SqlConstructor.ForShortToursTabJoin(toursTab) + $"WHERE t.country_id = 40 " +
+                $"AND ('{filter.DateLower}' AND date_start <= '{filter.DateUpper}') " +
+                $"AND (nights_count >= {filter.MinNightsCount} AND nights_count <= {filter.NightsCount}) " +
+                $"AND adults_count = {filter.AdultsCount} AND child_count = {filter.ChildCount} " +
+                $"AND (price >= {filter.PriceLower} AND price <= {filter.PriceUpper}) ";   
+            if(filter.OpFlag)
             {
-                List<Tour> toursListResult = new List<Tour>();
-                string sql = GetSqlTabJoin(toursTab) + $"WHERE t.country_id = {filter.CountryId} AND " +
-                    $"(date_start >= STR_TO_DATE('{filter.DateLower}', '%d.%m.%Y') AND date_start <= STR_TO_DATE('{filter.DateUpper}', '%d.%m.%Y')) AND " +
-                    $"nights_count <= {filter.NightsCount} AND adults_count = {filter.AdultsCount} AND child_count = {filter.ChildCount} AND " +
-                    $"(price >= {filter.PriceLower} AND price <= {filter.PriceUpper}) ORDER BY date_start DESC;";
-                toursListResult = GetToursListFromDb(sql);
-                return toursListResult;
+                sql += $" AND t.op_id IN ({SqlConstructor.ListInStr<int>(filter.OperatorsId)}) ";
             }
-            catch(Exception ex)
+            if(filter.DepCityFlag)
             {
-                throw new Exception("Erorr in SearchModule: " + ex.Message);
+                sql += $" AND t.dep_city_id = {filter.DepCityId} ";
             }
+            if(filter.MealFlag)
+            {
+                sql += $" AND t.meal_code = '{filter.MealCode}' ";
+            }
+            if(filter.CategoryFlag)
+            {
+                sql += $" AND h.category = '{filter.Category}'";
+            }
+            if(filter.RateFlag)
+            {
+                sql += $" AND h.rate >= {filter.Rate} ";
+            }
+            sql += $" ORDER BY date_start ASC;";
+            shortTours = GetToursListFromDb(sql);
+            return shortTours;
         }
-        public List<Tour> SearchToursByFilter(QuestionFilter filter)
+        public List<ShortTour> SearchToursByFilter(QuestionFilter filter)
         {
-            List<Tour> toursListResult = new List<Tour>();
-            string sql = GetSqlTabJoin(toursTab) + $"WHERE t.country_id = {filter.CountryID} AND " +
+            List<ShortTour> toursListResult = new List<ShortTour>();
+            string sql = SqlConstructor.ForShortToursTabJoin(toursTab) + $"WHERE t.country_id = {filter.CountryID} AND " +
                 $"(date_start >= STR_TO_DATE('{filter.StartDateLower}', '%d.%m.%Y') AND date_start <= STR_TO_DATE('{filter.StartDateUpper}', '%d.%m.%Y')) AND " +
                 $"date_finish <= {filter.EndDate} AND " +
                 $"nights_count <= {filter.NightsCount} AND adults_count = {filter.AdultsCount} AND child_count = {filter.ChildCount} AND " +
@@ -38,54 +54,43 @@ namespace VKRproject.Modules
             return toursListResult;
 
         }
-        public List<Tour> SearchToursByFilter(TourStatFilter filter)
+        public List<ShortTour> SearchToursByFilter(TourStatFilter filter)
         {
-            List<Tour> toursListResult = new List<Tour>();
-            string sql = GetSqlTabJoin(toursTab) + $"WHERE t.country_id IN ({ListInStr<int>(filter.CountryIdList)}) AND " +
+            List<ShortTour> toursListResult = new List<ShortTour>(); 
+            string sql = SqlConstructor.ForShortToursTabJoin(toursTab) + $" WHERE t.country_id IN ({SqlConstructor.ListInStr<int>(filter.CountryIdList)}) AND " +
                 $"(nights_count <= {filter.NightsCount} OR adults_count <= {filter.AdultsCount} OR child_count <= {filter.ChildCount} OR " +
                 $"price <= {filter.Price}) ORDER BY date_start DESC;";
             toursListResult = GetToursListFromDb(sql);
             return toursListResult;
         }
-        public List<Tour> SearchToursByClientOrder(int clientId)
+        public List<ShortTour> SearchToursByClientOrder(int clientId)
         {
-            List<Tour> toursListResult = new List<Tour>();
-            string sql = GetSqlTabJoin(toursArchiveTab) + $"JOIN orders_archive o ON t.ID = o.tour_id WHERE o.client_id = {clientId} ORDER BY o.order_date DESC;";
+            List<ShortTour> toursListResult = new List<ShortTour>();
+            string sql = SqlConstructor.ForShortToursTabJoin(toursArchiveTab) + $"JOIN orders_archive o ON t.ID = o.tour_id WHERE o.client_id = {clientId} ORDER BY o.order_date DESC;";
             toursListResult = GetToursListFromDb(sql);
             return toursListResult;
         }
-        private List<Tour> GetToursListFromDb(string sql)
+        private List<ShortTour> GetToursListFromDb(string sql)
         {
-            List<Tour> result = new List<Tour>();
+            List<ShortTour> result = new List<ShortTour>();
             DbTool.OpenDbConnection();
             var reader = DbTool.ExcecuteQueryWithResult(sql);
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    Tour tour = new Tour();
+                    ShortTour tour = new Tour();
                     tour.ID = reader[0].ToString();
-                    tour.TourOperator.ID = Int32.Parse(reader[1].ToString());
-                    tour.TourOperator.Name = reader[2].ToString();
-                    tour.Hotel.ID = Int32.Parse(reader[3].ToString());
-                    tour.City.ID = Int32.Parse(reader[4].ToString());
-                    tour.City.Name = reader[5].ToString();
-                    tour.Country.ID = Int32.Parse(reader[6].ToString());
-                    tour.Country.Name = reader[7].ToString();
-                    tour.Name = reader[8].ToString();
-                    tour.Room = reader[9].ToString();
-                    tour.MealType.Code = reader[10].ToString();
-                    tour.AccomType.Code = reader[11].ToString();
-                    tour.DateStart = DateOnly.FromDateTime(DateTime.Parse(reader[12].ToString()));
-                    tour.DateFinish = DateOnly.FromDateTime(DateTime.Parse(reader[13].ToString()));
-                    tour.NightsCount = Int32.Parse(reader[14].ToString());
-                    tour.AdultsCount = Int32.Parse(reader[15].ToString());
-                    tour.ChildCount = Int32.Parse(reader[16].ToString());
-                    tour.OpLinks = JArray.Parse(reader[17].ToString());
-                    tour.ImgLink = reader[18].ToString();
-                    tour.DepCity.ID = Int32.Parse(reader[19].ToString());
-                    tour.DepCity.Name = reader[20].ToString();
-                    tour.Price = Int32.Parse(reader[21].ToString());
+                    tour.Name = reader[1].ToString();
+                    tour.DateStart = DateOnly.FromDateTime(DateTime.Parse(reader[2].ToString()));
+                    tour.DateFinish = DateOnly.FromDateTime(DateTime.Parse(reader[3].ToString()));
+                    tour.Hotel.ID = Int32.Parse(reader[4].ToString());
+                    tour.Hotel.Name = reader[5].ToString();
+                    tour.Hotel.Category = reader[6].ToString();
+                    tour.City.ID = Int32.Parse(reader[7].ToString());
+                    tour.City.Name = reader[8].ToString();
+                    tour.Price = Int32.Parse(reader[9].ToString());
+                    tour.ImgLink = reader[10].ToString();
                     result.Add(tour);
                 }
             }
@@ -93,17 +98,8 @@ namespace VKRproject.Modules
             DbTool.CloseDbConnection();
             return result;
         }
-        private string ListInStr<T>(List<T> list)
-        {
-            string result = "";
-            foreach(var l in list)
-            {
-                result += l.ToString() + ',';
-            }
-            result = result.TrimEnd(',');
-            return result;
-        }
-        private string GetSqlTabJoin(string tabName)
+        
+        public static string GetSqlTabJoin(string tabName)
         {
             return "SELECT t.ID, t.op_id, op.name, t.hotel_id, t.city_id, c_d.name, t.country_id, c.name, t.name, t.room, t.meal_code, t.accom_code," +
                     "t.date_start, t.date_finish, t.nights_count, t.adults_count, t.child_count, t.op_links, t.img_link, t.dep_city_id, d.name, t.price " +

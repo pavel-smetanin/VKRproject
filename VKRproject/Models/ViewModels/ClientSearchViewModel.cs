@@ -2,11 +2,11 @@
 
 namespace VKRproject.Models.ViewModels
 {
-    public class ClientSearchViewModel
+    public class ClientSearchViewModel : LayoutViewModel
     {
-        public List<Client> Clients { get; set; }
-        public List<Tour> Tours { get; set; }
-        public List<Tour> ToursArchive { get; set; }
+        public List<Client> Clients { get; set; } = new List<Client>();
+        public List<ShortTour> Tours { get; set; } = new List<ShortTour>();
+        public List<ShortTour> ToursArchive { get; set; } = new List<ShortTour>();
 
     }
 }

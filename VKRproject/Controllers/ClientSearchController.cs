@@ -9,9 +9,15 @@ namespace VKRproject.Controllers
     {
         private ClientSearchModule module = new ClientSearchModule();
         private ClientSearchViewModel model = new ClientSearchViewModel();
+        public ClientSearchController()
+        {
+            model.User = AuthorizationModule.AuthUser;
+        }
         public IActionResult Index()
         {
-            return View();
+            if(model.User == null)
+                return RedirectPermanent("~/Authorization/Index");
+            return View(model);
         }
         [HttpPost]
         public IActionResult SearchByFio(string lastname, string firstname, string patrname, string birthdate)

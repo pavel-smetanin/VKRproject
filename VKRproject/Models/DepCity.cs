@@ -1,9 +1,9 @@
-﻿using System.Text.Json.Nodes;
+﻿using Newtonsoft.Json.Linq;
 
 namespace VKRproject.Models
 {
     public class DepCity: BaseCity
     {
-        public JsonObject Airport { get; set; }
+        public JArray Airport { get; set; }
     }
 }

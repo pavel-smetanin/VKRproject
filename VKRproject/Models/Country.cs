@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Nodes;
+﻿using Newtonsoft.Json.Linq;
 
 namespace VKRproject.Models
 {
@@ -8,8 +8,8 @@ namespace VKRproject.Models
         public string Name { get; set; }
         public string Alias { get; set; }
         public bool Visa { get; set; }
-        public JsonArray Types { get; set; }
-        public JsonObject CurrencyInfo { get; set; }
+        public JArray Types { get; set; }
+        public JObject CurrencyInfo { get; set; }
 
     }
 }

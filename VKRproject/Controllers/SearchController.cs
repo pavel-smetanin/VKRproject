@@ -10,41 +10,39 @@ namespace VKRproject.Controllers
     public class SearchController : Controller
     {
         private readonly ILogger<SearchController> _logger;
-        private SearchViewModel Model;
-        private User AuthUser;
+        private SearchViewModel Model = new SearchViewModel();
 
         public SearchController(ILogger<SearchController> logger)
         {
             _logger = logger;
-            Model = new SearchViewModel();
-            Model.Countries = ModelTool.GetCountriesFromDb();
-            Model.Tours = new List<Tour>();
-            AuthUser = AuthorizationModule.AuthUser;
+            Model.CountriesDict = ModelTool.GetCountriesDict();
+            Model.Tours = new List<ShortTour>();
+            Model.OperatorsDict = ModelTool.GetOperatorsDict();
+            Model.DepCitiesDict = ModelTool.GetDepCitiesDict();
+            Model.MealsType = ModelTool.GetMealsType();
+            Model.User = AuthorizationModule.AuthUser;
         }
 
         [HttpGet]
-        public IActionResult Index(Filter filter)
-        {
-            if (AuthUser == null)
-                return RedirectPermanent("~/Authorization/Index");
-            ViewBag.UserInfo = $"{AuthUser.Employee.LastName} {AuthUser.Employee.FirstName} {AuthUser.Employee.PatrName} {AuthUser.Employee.Position}";
-            SearchModule module = new SearchModule();
-            Model.Tours = module.SearchToursByFilter(filter);
-            return View(Model);
-        }
-        /*[HttpGet]
         public IActionResult Index()
         {
-            if (AuthUser == null)
-                return RedirectPermanent("Authorization/Index");
+            if (Model.User == null)
+                return RedirectPermanent("~/Authorization/Index");
             return View(Model);
-        }*/
+        }
+        [HttpGet]
+        public IActionResult SearchByFilter(Filter filter)
+        {
+            SearchModule module = new SearchModule();
+            Model.Tours = module.SearchToursByFilter(filter);
+            return View("Index", Model);
+        }
         [HttpPost]
         public async Task<IActionResult> Index(string email)
         {
             EmailModule module = new EmailModule();
             var tours = Model.Tours;
-            await module.SendToursByEmail(tours, email);
+            //await module.SendToursByEmail(tours, email);
             ViewBag.EmailMessage = "Подборка отправлена на " + email;
             return View(Model);
         }
@@ -52,9 +50,6 @@ namespace VKRproject.Controllers
         {
             return View();
         }
-
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -7,5 +7,9 @@
         public string Category { get; set; }
         public float Rate { get; set; }
         public City City { get; set; }
+        public Hotel()
+        {
+            City = new City();
+        }
     }
 }

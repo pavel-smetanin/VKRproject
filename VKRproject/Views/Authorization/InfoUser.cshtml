@@ -1,0 +1,29 @@
+﻿@model LayoutViewModel
+<div class="modal-header">
+    <h3 class="modal-title">Текущий пользователь</h3>
+</div>
+<div>
+    <ul>
+        <li><label>ID: @Model.User.Employee.ID</label></li>
+        <li><label>Фамилия: @Model.User.Employee.LastName</label></li>
+        <li><label>Имя: @Model.User.Employee.FirstName</label></li>
+        <li><label>Отчество: @Model.User.Employee.PatrName</label></li>
+        <li><label>Должность: @Model.User.Employee.Position</label></li>
+        <li>
+            <div>
+                <h4>Контактные данные</h4>
+                <ul>
+                    <li>Телефон: @Model.User.Employee.Phone</li>
+                    <li>Email: @Model.User.Employee.Email</li>
+                </ul>
+            </div>
+        </li>
+        <li><label>Роль: @Model.User.Role</label></li>
+    </ul>
+</div>
+<div>
+    <p>Для изменения данных пользователя воспользуйтесь личным кабинетом сотрудника агентсва! <a>Перейти в личный кабинет</a></p>
+</div>
+<div>
+    <button action="@Url.Action("Exit", "Authorization")">Выход</button>
+</div>

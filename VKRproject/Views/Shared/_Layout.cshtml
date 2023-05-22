@@ -34,7 +34,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Privacy">О проекте</a>
                         </li>
+                        <li></li>  
                     </ul>
+                </div>
+                <div>
+                    <a href="~/Authorization/InfoUser">@Model.User.Employee.FirstName @Model.User.Employee.LastName</a>
+                    <label>@Model.User.Role</label>
+                    <a href="@Url.Action("Exit", "Authorization")">Выйти</a>
                 </div>
             </div>
         </nav>

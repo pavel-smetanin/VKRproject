@@ -2,9 +2,13 @@
 
 namespace VKRproject.Models.ViewModels
 {
-    public class SearchViewModel
+    public class SearchViewModel : LayoutViewModel
     {
-        public List<Tour> Tours { get; set; } = new List<Tour>();
-        public List<Country> Countries { get; set; } = new List<Country>();
+        public List<ShortTour> Tours { get; set; } = new List<ShortTour>();
+        public List<ShortTour> ShortTours { get; set; } = new List<ShortTour>();
+        public Dictionary<int, string> CountriesDict { get; set; } = new Dictionary<int, string>();
+        public Dictionary<int, string> OperatorsDict { get; set; } = new Dictionary<int, string>();
+        public Dictionary<int, string> DepCitiesDict { get; set; } = new Dictionary<int, string>();
+        public List<ModelType> MealsType { get; set; } = new List<ModelType>();
     }
 }

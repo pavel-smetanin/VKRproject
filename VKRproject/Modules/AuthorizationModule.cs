@@ -44,5 +44,10 @@ namespace VKRproject.Modules
             }
             AuthUser = user;
         }
+        public static void ClearUser()
+        {
+            if (AuthUser != null)
+                AuthUser = null;
+        }
     }
 }

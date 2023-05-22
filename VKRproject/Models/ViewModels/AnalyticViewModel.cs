@@ -1,6 +1,6 @@
 ﻿namespace VKRproject.Models.ViewModels
 {
-    public class AnalyticViewModel
+    public class AnalyticViewModel : LayoutViewModel
     {
         public Dictionary<string, int> CountriesDict { get; set; }
         public Dictionary<string, int> OperatorsDict { get; set; }

@@ -8,6 +8,10 @@ namespace VKRproject.Controllers
     {
         private AnalyticModule module = new AnalyticModule();
         private AnalyticViewModel model = new AnalyticViewModel();
+        public AnalyticController() 
+        {
+            model.User = AuthorizationModule.AuthUser;
+        }
         public IActionResult Index()
         {
             if(AnalyticModule.DateDataUpdate == null)

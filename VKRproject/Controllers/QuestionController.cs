@@ -7,22 +7,25 @@ namespace VKRproject.Controllers
 {
     public class QuestionController : Controller
     {
+        private User AuthUser;
         private static TelegramModule BotModule;
         private SearchViewModel ViewModel = new SearchViewModel();
+        public QuestionController()
+        {
+            ViewModel.User = AuthorizationModule.AuthUser;
+        }
         public IActionResult Index()
         {
-            return View();  
+            return View(ViewModel);  
         }
-        
         public IActionResult Start()
         {
             BotModule = new TelegramModule();
             BotModule.StartBot();
             ViewBag.Code = BotModule.Code;
             //Session = BotModule.Code;
-            return View("Index");
+            return View("Index", ViewModel);
         }
-        
         public IActionResult Finish()
         {
             BotModule.FinishBot();
@@ -38,7 +41,7 @@ namespace VKRproject.Controllers
             else
             {
                 ViewBag.ResultMessage = "Анкета не заполнена";
-                return View("Index");
+                return View("Index", ViewModel);
             }
         } 
     }

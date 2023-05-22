@@ -29,26 +29,26 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Analytic}/{action=Index}");
+    pattern: "{controller=Search}/{action=Index}");
 
 app.Run();
-
-//TelegramModule module = new TelegramModule();
-//module.Run();
 /*
-AnalyticModule module = new AnalyticModule();
-Console.WriteLine($"{module.GeneralToursCount()}    {module.GeneralAvgPrice()}    {module.GeneralAvgNights()}");
-Console.WriteLine($"{module.MaxPrice().Value} {module.MinPrice().Value}");
-Console.WriteLine($"{module.MaxNightsCount().Value} {module.MinNightsCount().Value}");
-var countries = module.ToursCountsByCountry();
-foreach(var c in countries)
-{
-    Console.WriteLine($"{c.Key} {c.Value}");
-}
-var operators = module.ToursCountsByOperator();
-foreach(var o in operators)
-{
-    Console.WriteLine($"{o.Key} {o.Value}");
-}
-Console.WriteLine($"{module.CountryWithMaxTours()}  {module.CityWithMaxTours()} {module.HotelWithMaxTours()}");
-*/
+Filter f = new Filter();
+f.CountryId = 40;
+f.OperatorsId = new List<int>{ 9, 38, 54};
+f.DateLower = "01.01.2014";
+f.DateUpper = "01.01.2015";
+f.PriceLower = 100;
+f.PriceUpper = 100000;
+f.MinNightsCount = 1;
+f.NightsCount = 13;
+f.AdultsCount = 2;
+f.ChildCount = 0;
+f.DepCityId = 832;
+f.MealCode = "AI";
+f.Category = "5*";
+f.Rate = 1.0;
+SearchModule module = new SearchModule();
+var r = module.SearchToursByFilter(f);
+foreach (var e in r)
+    Console.WriteLine($"{e.ID}  {e.Name}    {e.City.Name}");*/

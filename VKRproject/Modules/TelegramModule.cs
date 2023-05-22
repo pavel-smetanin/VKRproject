@@ -13,7 +13,7 @@ namespace VKRproject.Modules
         public static string BotUrl { get; private set; } = "https://t.me/VKRprojectQuestionBot";
         private TelegramBotClient Client { get; set; }
         public QuestionFilter Filter { get; private set; }
-        public List<Country> Countries { get; set; }
+        public Dictionary<int, string> Countries { get; set; }
         public int Code { get; private set; }
         private bool UserCheck;
         private int DialogStatus;
@@ -24,7 +24,7 @@ namespace VKRproject.Modules
             UserCheck = false;
             DialogStatus = 0;
             Code = GenerateCode();
-            Countries = ModelTool.GetCountriesFromDb();
+            Countries = ModelTool.GetCountriesDict();
             
         }
         public void StartBot()
@@ -217,7 +217,7 @@ namespace VKRproject.Modules
             var buttons = new List<InlineKeyboardButton[]>();
             foreach(var c in Countries)
             {
-                buttons.Add(new[] { InlineKeyboardButton.WithCallbackData(c.Name, c.ID.ToString()) });
+                buttons.Add(new[] { InlineKeyboardButton.WithCallbackData(c.Value, c.Key.ToString()) });
             }
             var kbMurkup = new InlineKeyboardMarkup(buttons);
            
