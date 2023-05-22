@@ -5,7 +5,7 @@ namespace VKRproject.Modules
 {
     public class AuthorizationModule
     {
-        public static User AuthUser { get; private set; }
+        public static User? AuthUser { get; private set; }
         public bool CheckAuth(string login, string password)
         {
             string sqlStr = $"SELECT count(*) FROM auth_data WHERE login = '{login}' AND password = '{password}';";
@@ -46,8 +46,7 @@ namespace VKRproject.Modules
         }
         public static void ClearUser()
         {
-            if (AuthUser != null)
-                AuthUser = null;
+            AuthUser = null;
         }
     }
 }
