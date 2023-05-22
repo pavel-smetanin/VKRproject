@@ -9,8 +9,8 @@ namespace VKRproject.Modules
 {
     public class TelegramModule
     {
-        private static string Token  = "TOKEN";
-        public static string BotUrl { get; private set; } = "https://t.me/VKRprojectQuestionBot";
+        private static string Token  = ConfigProvider.PrivateConfig["Telegram:BotToken"];
+        public static string BotUrl { get; private set; } = ConfigProvider.PrivateConfig["Telegram:BotUrl"];
         private TelegramBotClient Client { get; set; }
         public QuestionFilter Filter { get; private set; }
         public Dictionary<int, string> Countries { get; set; }

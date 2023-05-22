@@ -144,8 +144,7 @@
         </div>
     </form>
 </div>
-<div><a href="~/InfoModel/InfoTour?id=521046291">TesterTour</a></div>
-@await Html.PartialAsync("../Shared/UserModalPage", Model.User)
+
 @if (Model.Tours.Count > 0)
 {
     <div>@await Html.PartialAsync("../Shared/ToursResult", Model.Tours)</div>

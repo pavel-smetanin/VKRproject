@@ -1,7 +1,7 @@
 using VKRproject.Modules;
 using VKRproject.Models;
 using VKRproject.Tools;
-
+/*
 //DataUpdaterModule module = new DataUpdaterModule();
 //await module.Run();
 
@@ -52,3 +52,5 @@ SearchModule module = new SearchModule();
 var r = module.SearchToursByFilter(f);
 foreach (var e in r)
     Console.WriteLine($"{e.ID}  {e.Name}    {e.City.Name}");*/
+string server = ConfigProvider.PrivateConfig["MySQL:Server"];
+Console.WriteLine(server);

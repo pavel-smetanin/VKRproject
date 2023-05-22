@@ -6,6 +6,11 @@ namespace VKRproject.Modules
 {
     public class DataUpdaterModule
     {
+        public static DateTime DateUpdate { get; private set; }
+        public static int CountTours { get; private set; } = 0;
+        public static int CountHotels { get; private set; } = 0;
+        public static int CountCities { get; private set; } = 0;
+        public static string Message { get; private set; } = "Message";
         public async Task Run()
         {
             DeleteData();

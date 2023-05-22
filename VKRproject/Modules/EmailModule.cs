@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Mail;
 using VKRproject.Models;
+using VKRproject.Tools;
 
 namespace VKRproject.Modules
 {
@@ -10,13 +11,13 @@ namespace VKRproject.Modules
         {
             try
             {
-                string sendEmail = "";
-                string password = "";
-                string name = "TravelAgency";
+                string sendEmail = ConfigProvider.PrivateConfig["Email:Login"];
+                string password = ConfigProvider.PrivateConfig["Email:Password"];
+                string name = ConfigProvider.PrivateConfig["Email:Name"];
                 MailAddress sendAdress = new MailAddress(sendEmail, name);
                 MailAddress destAdress = new MailAddress(destEmail);
                 MailMessage message = new MailMessage(sendAdress, destAdress);
-                message.Subject = "Подборка туров";
+                message.Subject = ConfigProvider.PrivateConfig["Email:Subject"];
                 message.Body = CreateMessageStr(toursList);
                 message.IsBodyHtml = true;
                 SmtpClient client = new SmtpClient("smtp.gmail.com", 587);

@@ -10,6 +10,8 @@ namespace VKRproject.Tools
         private static MySqlConnection Connection;
         static DbTool()
         {
+            string server = ConfigProvider.PrivateConfig["MySQL:Server"];
+
             Connection = new MySqlConnection("Server = localhost; Database = is_travel_agency; port = 3306; User Id = root; password = q1234as");
         }
         public static void InitConnection(string connectionString)

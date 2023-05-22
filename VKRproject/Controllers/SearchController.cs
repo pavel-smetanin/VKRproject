@@ -27,7 +27,7 @@ namespace VKRproject.Controllers
         public IActionResult Index()
         {
             if (Model.User == null)
-                return RedirectPermanent("~/Authorization/Index");
+                return RedirectPermanent(ConfigProvider.Configuration["Auth:ExitUrl"]);
             return View(Model);
         }
         [HttpGet]

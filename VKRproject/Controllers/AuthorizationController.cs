@@ -4,6 +4,7 @@ using System.Diagnostics;
 using VKRproject.Models;
 using VKRproject.Models.ViewModels;
 using VKRproject.Modules;
+using VKRproject.Tools;
 
 namespace VKRproject.Controllers
 {
@@ -26,7 +27,7 @@ namespace VKRproject.Controllers
         public IActionResult Exit()
         {
             AuthorizationModule.ClearUser();
-            return RedirectPermanent("~/Authorization/Index");
+            return RedirectPermanent(ConfigProvider.Configuration["Auth:ExitUrl"]);
         }
         public IActionResult InfoUser()
         {
@@ -39,7 +40,7 @@ namespace VKRproject.Controllers
             if (authModule.CheckAuth(login, password))
             {
                 authModule.InitUser(login, password);
-                return RedirectPermanent("~/Search/Index");
+                return RedirectPermanent(ConfigProvider.Configuration["Auth:EntryUrl"]);
             }
             else
             {
