@@ -2,6 +2,7 @@
 using VKRproject.Models;
 using VKRproject.Models.ViewModels;
 using VKRproject.Modules;
+//using System.Web.Mvc;
 
 namespace VKRproject.Controllers
 {
@@ -14,6 +15,7 @@ namespace VKRproject.Controllers
         {
             ViewModel.User = AuthorizationModule.AuthUser;
         }
+        
         public IActionResult Index()
         {
             return View(ViewModel);  

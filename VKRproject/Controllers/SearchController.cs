@@ -22,7 +22,6 @@ namespace VKRproject.Controllers
             Model.MealsType = ModelTool.GetMealsType();
             Model.User = AuthorizationModule.AuthUser;
         }
-
         [HttpGet]
         public IActionResult Index()
         {

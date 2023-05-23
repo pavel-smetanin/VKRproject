@@ -5,7 +5,7 @@ namespace VKRproject.Modules
 {
     public class AnalyticModule
     {
-        public static DateTime DateDataUpdate { get; set; }
+        public static DateTime DateDataUpdate { get; set; } = DataUpdaterModule.DateUpdate;
         public int GeneralToursCount()
         {
             string sql = "SELECT count(ID) FROM tours_data;";

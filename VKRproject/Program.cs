@@ -1,9 +1,11 @@
 using VKRproject.Modules;
-using VKRproject.Models;
 using VKRproject.Tools;
 /*
-//DataUpdaterModule module = new DataUpdaterModule();
-//await module.Run();
+if (Convert.ToBoolean(ConfigProvider.Configuration["Update:Enable"]))
+{
+    DataUpdaterModule module = new DataUpdaterModule();
+    await module.Run();
+}*/
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Search/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -52,5 +54,4 @@ SearchModule module = new SearchModule();
 var r = module.SearchToursByFilter(f);
 foreach (var e in r)
     Console.WriteLine($"{e.ID}  {e.Name}    {e.City.Name}");*/
-string server = ConfigProvider.PrivateConfig["MySQL:Server"];
-Console.WriteLine(server);
+

@@ -22,6 +22,14 @@ namespace VKRproject.Controllers
             {
                 ViewBag.DateUpdate = AnalyticModule.DateDataUpdate.ToString();
             }
+            if(DataUpdaterModule.ErrorFlag)
+            {
+                ViewBag.UpdateMessage = "При попытке последнего обновления базы произошла ошибка! Данные не обновлены";
+            }
+            else
+            {
+                ViewBag.UpdateMessage = $"Данные обновлены: Количество городов: {DataUpdaterModule.CountCities} Количество отелей: {DataUpdaterModule.CountHotels}  Количество туров: {DataUpdaterModule.CountTours} ";
+            }
             ViewBag.GeneralToursCount = module.GeneralToursCount();
             ViewBag.GeneralAvgPrice = module.GeneralAvgPrice();
             ViewBag.GeneralAvgNights = module.GeneralAvgNights();

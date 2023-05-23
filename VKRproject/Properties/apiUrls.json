@@ -1,15 +1,14 @@
 {
-  "tours": [
-    "1",
-    "2",
-    "3"
-  ],
-  "countries": [
-    "23",
-    "32"
+  "cities": [
+    "https://module.sletat.ru/Main.svc/GetCities?countryId=40",
+    "https://module.sletat.ru/Main.svc/GetCities?countryId=150",
   ],
   "hotels": [
-    "12",
-    "13"
+    "https://module.sletat.ru/Main.svc/GetHotels?countryId=40",
+    "https://module.sletat.ru/Main.svc/GetHotels?countryId=150"
+  ],
+  "tours": [
+    "http://module.sletat.ru/Main.svc/GetTours?groupBy=hotel&countryId=40",
+    "http://module.sletat.ru/Main.svc/GetTours?groupBy=hotel&countryId=150"
   ]
 }
