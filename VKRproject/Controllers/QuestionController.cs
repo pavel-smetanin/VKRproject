@@ -2,13 +2,12 @@
 using VKRproject.Models;
 using VKRproject.Models.ViewModels;
 using VKRproject.Modules;
-//using System.Web.Mvc;
+using VKRproject.Tools;
 
 namespace VKRproject.Controllers
 {
     public class QuestionController : Controller
     {
-        private User AuthUser;
         private static TelegramModule BotModule;
         private SearchViewModel ViewModel = new SearchViewModel();
         public QuestionController()
@@ -18,6 +17,7 @@ namespace VKRproject.Controllers
         
         public IActionResult Index()
         {
+            ViewBag.BotUrl = ConfigProvider.PrivateConfig["Telegram:BotUrl"];
             return View(ViewModel);  
         }
         public IActionResult Start()

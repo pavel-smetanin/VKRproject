@@ -1,6 +1,24 @@
 ﻿@model InfoModelViewModel;
 
 <div>
-    <h1>Отель</h1>
+    @if (Model.Hotel != null)
+    {
+        <div>
+            <h4>Отель: <label>@Model.Hotel.Name</label></h4>
+            <ul>
+                <li>ID: <label>@Model.Hotel.ID</label></li>
+                <li>
+                    Город: <a href="~/InfoModel/InfoCity?id=@Model.Hotel.City.ID"><label>@Model.Hotel.City.Name</label></a>
+                </li>
+                <li>Категория: <label>@Model.Hotel.Category</label></li>
+                <li>Рейтинг (от 0 до 10, согласно аналитике Sletat.ru): <label>@Model.Hotel.Rate</label></li>
+            </ul>
 
+        </div>
+    }
 </div>
+<style>
+    ul {
+        list-style-type: none;
+    }
+</style>

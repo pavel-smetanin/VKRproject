@@ -30,10 +30,25 @@ namespace VKRproject.Controllers
             return View(Model);
         }
         [HttpGet]
-        public IActionResult SearchByFilter(Filter filter)
+        public IActionResult SearchByFilter(Filter f)
         {
+            f = new Filter();
+            f.CountryId = 40;
+            f.OperatorsId = new List<int> { 9, 38, 54 };
+            f.DateLower = "2014-01-01";
+            f.DateUpper = "2015-01-01";
+            f.PriceLower = 100;
+            f.PriceUpper = 100000;
+            f.MinNightsCount = 1;
+            f.NightsCount = 20;
+            f.AdultsCount = 2;
+            f.ChildCount = 0;
+            f.DepCityId = 832;
+            f.MealCode = "AI";
+            f.Category = "5*";
+            f.Rate = 1.0;
             SearchModule module = new SearchModule();
-            Model.Tours = module.SearchToursByFilter(filter);
+            Model.Tours = module.SearchToursByFilter(f);
             return View("Index", Model);
         }
         [HttpPost]

@@ -1,22 +1,6 @@
-﻿@using VKRproject.Models.ViewModels;
-@model SearchViewModel
+﻿@model SearchViewModel
 
-<style>
-    table{
-        border: 1px black;
-    }
-    td {
-        padding: 5px;
-    }
 
-    tr:nth-child(even) {
-        background: #CCC
-    }
-
-    tr:nth-child(odd) {
-        background: #FFF
-    }
-</style>
 <script>
     function change(objName, min, max, step) {
         var obj = document.getElementById(objName);
@@ -26,128 +10,170 @@
         obj.value = tmp;
     }
 </script>
-<header>
-    <div>Тукущий пользователь</div>
-    <div>@ViewBag.UserInfo</div>
-</header>
-<div>
-    <form class="" method="get" action="@Url.Action("SearchByFilter","Search")">
-        <div name = "country">
-            <label>Направление (страна)</label>
-            <select name="CountryId">
-                @foreach(var c in Model.CountriesDict)
-                {
-                    <option value="@c.Key">@c.Value</option>
-                }
-            </select>
-        </div>
-        <div>
-            <label>Туроператор 
-                <select name = "OperatorsId" multiple>
-                    @foreach(var op in Model.OperatorsDict)
-                    {
-                        <option value="@op.Key">@op.Value</option>
-                    }
-                </select>
-            </label>
-            <label>Все операторы<input type="checkbox" name="OpFlag"/></label>
-        </div>
-        <div>
-            <label>Город вылета
-                <select name="DepCityId">
-                    @foreach(var d in Model.DepCitiesDict)
-                    {
-                        <option value="@d.Key">@d.Value</option>
-                    }
-                </select>
-            </label>
-            <label>Все города вылета<input type="checkbox" name="DepCityFlag"/></label>
-        </div>
-        <div>
-            <label>Период даты вылета:
-                <label>C <input type="date" name="DateLower"/></label>
-                <label>По <input type="date" name="DateUpper"/></label>
-            </label>
-        </div>
-        <div>
-            <label>Минимальное количество ночей
-                <input type="button" value="+" onClick="change('night',0,100, 1);" />
-                <input id="night" type="number" value="1" name="MinNightsCount" />
-                <input type="button" value="-" onClick="change('night',0,10,-1);" />
-            </label>
-            <label>Количество ночей
-                <input type="button" value="+" onClick="change('night',0,100, 1);" />
-                <input id="night" type="number" value="1" name= "NightsCount"/>
-                <input type="button" value="-" onClick="change('night',0,10,-1);" />
-            </label>
-        </div>
-        <div>
-            <label>Количество туристов</label>
-            <label>Взрослых
-                <input type="button" value="+" onClick="change('adult',0,10, 1);" />
-                <input id="adult" type="number" value="1" name="AdultsCount"/>
-                <input type="button" value="-" onClick="change('adult',0,10,-1);" />
-            </label>
-            <label>Детей
-                <input type="button" value="+" onClick="change('child',0,10, 1);" />
-                <input id="child" type="number" value="0" name="ChildCount" />
-                <input type="button" value="-" onClick="change('child',0,10,-1);" />
-            </label>
-        </div>
-        <div>
-            <label>Категория отеля
-                <select name="Category">
-                    <option value="1*">1 звезда</option>
-                    <option value="2*">2 звезды</option>
-                    <option value="3*">3 звезды</option>
-                    <option value="4*">4 звезды</option>
-                    <option value="5*">5 звезд</option>
-                    <option value="apts">Аппартаменты</option>
-                    <option value="Без звезд">Без звезд</option>
-                </select>
-            </label>
-            <label>Учитывать все категории<input type="checkbox" name="CategoryFlag" /></label>
-        </div>
-        <div>
-            <label>Рейтинг отеля
-                <select name="Rate">
-                    <option value="1.0">От 1.0</option>
-                    <option value="2.0">От 2.0</option>
-                    <option value="2.5">От 2.5</option>
-                    <option value="3.0">От 3.0</option>
-                    <option value="4.0">От 4.0</option>
-                    <option value="4.5">От 4.5</option>
-                    <option value="5.0">От 5.0</option>
-                </select>
-            </label>
-            <label>Не учитывать рейтинг отеля <input type="checkbox" name="RateFlag" /></label>
-        </div>
-        <div>
-            <label>Тип питания
-                <select name="MealCode">
-                    @foreach(var m in Model.MealsType)
-                    {
-                        <option value="@m.Code">@m.Code - @m.Description</option>
-                    }
-                </select>
-            </label>
-            <label>Не учитывать тип питания <input type="checkbox" name="MealFlag"/></label>
-        </div>
-        <div>
-            <label>Цена
-                <label>От <input type = "number" min="0" name="PriceLower"/></label>
-                <label>До<input type="number" min="100000" name="PriceUpper"/></label>
-            </label>
-        </div>
-        <div>
-            <button class="form_auth_button">Найти туры</button>
-        </div>
-    </form>
-</div>
 
+<table class="search-form">
+    <form class="" method="get" action="@Url.Action("SearchByFilter","Search")">
+        <u class="form-list">
+            <li>
+                <div name = "country">
+                    <label>Направление (страна)</label>
+                    <select name="CountryId">
+                        @foreach(var c in Model.CountriesDict)
+                        {
+                            <option value="@c.Key">@c.Value</option>
+                        }
+                    </select>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <label>
+                        Город вылета
+                        <select name="DepCityId">
+                            @foreach (var d in Model.DepCitiesDict)
+                            {
+                                <option value="@d.Key">@d.Value</option>
+                            }
+                        </select>
+                    </label>
+                    <label>Все города вылета<input type="checkbox" name="DepCityFlag" /></label>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <label>Туроператор 
+                        <select name = "OperatorsId" multiple>
+                            @foreach(var op in Model.OperatorsDict)
+                            {
+                                <option value="@op.Key">@op.Value</option>
+                            }
+                        </select>
+                    </label>
+                    <label>Все операторы<input type="checkbox" name="OpFlag"/></label>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <label>Период даты вылета:
+                        <label>C <input type="date" name="DateLower"/></label>
+                        <label>По <input type="date" name="DateUpper"/></label>
+                    </label>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <label>Количество ночей: 
+                        <label> От 
+                            <input type="button" class="clicker" value="+" onClick="change('minNight',0,100, 1);" />
+                            <input id="minNight" class="count-input" type="number" value="1" name="MinNightsCount"/>
+                            <input type="button" class="clicker" value="-" onClick="change('minNight',0,10,-1);" />
+                        </label>
+                        <label> До 
+                            <input type="button" class="clicker" value="+" onClick="change('maxNight',0,100, 1);" />
+                            <input id="maxNight" class="count-input" type="number" value="1" name= "NightsCount" size="20"/>
+                            <input type="button" class="clicker" value="-" onClick="change('maxNight',0,10,-1);" />
+                        </label>
+                    </label>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <label>Количество туристов
+                        <label>Взрослых 
+                            <input type="button" class="clicker" value="+" onClick="change('adult',0,10, 1);" />
+                            <input id="adult" class="count-input" type="number" value="1" name="AdultsCount"/>
+                            <input type="button" class="clicker" value="-" onClick="change('adult',0,10,-1);" />
+                        </label>
+                        <label>Детей 
+                            <input type="button" class="clicker" value="+" onClick="change('child',0,10, 1);" />
+                            <input id="child" class="count-input" type="number" value="0" name="ChildCount" />
+                            <input type="button" class="clicker" value="-" onClick="change('child',0,10,-1);" />
+                        </label>
+                    </label>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <label>Категория отеля
+                        <select name="Category">
+                            <option value="1*">1 звезда</option>
+                            <option value="2*">2 звезды</option>
+                            <option value="3*">3 звезды</option>
+                            <option value="4*">4 звезды</option>
+                            <option value="5*">5 звезд</option>
+                            <option value="apts">Аппартаменты</option>
+                            <option value="Без звезд">Без звезд</option>
+                        </select>
+                    </label>
+                    <label>Учитывать все категории<input type="checkbox" name="CategoryFlag" /></label>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <label>Рейтинг отеля
+                        <select name="Rate">
+                            <option value="1.0">От 1.0</option>
+                            <option value="2.0">От 2.0</option>
+                            <option value="2.5">От 2.5</option>
+                            <option value="3.0">От 3.0</option>
+                            <option value="4.0">От 4.0</option>
+                            <option value="4.5">От 4.5</option>
+                            <option value="5.0">От 5.0</option>
+                        </select>
+                    </label>
+                    <label>Не учитывать рейтинг отеля <input type="checkbox" name="RateFlag" /></label>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <label>Тип питания
+                        <select name="MealCode">
+                            @foreach(var m in Model.MealsType)
+                            {
+                                <option value="@m.Code">@m.Code - @m.Description</option>
+                            }
+                        </select>
+                    </label>
+                    <label>Не учитывать тип питания <input type="checkbox" name="MealFlag"/></label>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <label>Цена
+                        <label>От <input type = "number" min="0" name="PriceLower"/></label>
+                        <label>До<input type="number" min="0" name="PriceUpper"/></label>
+                    </label>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <button class="form_auth_button">Найти туры</button>
+                </div>
+            </li>
+        </u>
+    </form>
+</table>
+<br />
 @if (Model.Tours.Count > 0)
 {
-    <div>@await Html.PartialAsync("../Shared/ToursResult", Model.Tours)</div>
+    <div class="result">@await Html.PartialAsync("../Shared/ToursResult", Model.Tours)</div>
 }
+<style>
+    .form-list li {
+        list-style-type: none;
+        margin: 2px;
+        background: #f1f1f1;
+        display:flex;
+        text-align: center;
+        padding: 10px;
+    }
 
+    .count-input{
+        width:50px;
+    }
+    .search-form{
+        background: #f1f1f1;
+        border: 2px;
+    }
+</style>
 

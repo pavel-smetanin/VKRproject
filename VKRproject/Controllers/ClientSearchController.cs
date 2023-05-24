@@ -47,7 +47,6 @@ namespace VKRproject.Controllers
         [HttpGet]
         public IActionResult Result(int id)
         {
-            //ViewBag.Message = id;
             var stats = module.GetTourStatsByClientId(id);
             TourStatModule statModule = new TourStatModule();
             var filter = statModule.GetTourStatFilter(stats);

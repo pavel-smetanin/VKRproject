@@ -1,5 +1,21 @@
 ﻿@model InfoModelViewModel;
 
-<div>
-    @Model.City.ID
-</div>
+@if(Model.City != null)
+{
+    <div>
+        <h4>Город (курорт): <label>@Model.City.Name</label></h4>
+        <ul>
+            <li>ID: <label>@Model.City.ID</label></li>
+            <li>
+                Страна: <a href="~/InfoModel/InfoCountry?id=@Model.City.Country.ID"><label>@Model.City.Country.Name</label></a>
+            </li>
+            <li>Популярность города (согласно аналитике Sletat.ru): <label>@ViewBag.Popular</label></li>
+            <li>Описание: <a href="@Model.City.DescrUrl">Ссылка на описание</a></li>
+        </ul>
+    </div>
+}
+<style>
+    ul {
+        list-style-type: none;
+    }
+</style>

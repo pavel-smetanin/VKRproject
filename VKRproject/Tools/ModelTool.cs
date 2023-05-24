@@ -216,10 +216,10 @@ namespace VKRproject.Tools
                     tourOperator.Name = reader[1].ToString();
                     tourOperator.Inn = reader[2].ToString();
                     tourOperator.ContractNum = reader[3].ToString();
-                    tourOperator.Adress = reader[3].ToString();
-                    tourOperator.Email = reader[4].ToString();
-                    tourOperator.Phone = reader[5].ToString();
-                    tourOperator.SiteLink = reader[6].ToString();
+                    tourOperator.Adress = reader[4].ToString();
+                    tourOperator.Email = reader[5].ToString();
+                    tourOperator.Phone = reader[6].ToString();
+                    tourOperator.SiteLink = reader[7].ToString();
                 }
             }
             reader.Close();

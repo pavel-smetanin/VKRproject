@@ -1,75 +1,117 @@
 ﻿@model ClientSearchViewModel
 
-<div>
-    <p>
-        <form class="" method="post" action="@Url.Action("SearchByFio", "ClientSearch")">
-            <label>Фамилия</label>
-            <input type="text" name="lastname"/>
-            <label>Имя</label>
-            <input type="text" name="firstname" value=""/>
-            <label>Отчетство</label>
-            <input type="text" name="patrname" value="" />
-            <label>Дата рождения</label>
-            <input type="date" name="birthdate" value="00.00.0000">
-            <button>Найти клиента</button>
+<div class="search-client-forms">
+    <div class="client-form">
+        <form class="form" method="post" action="@Url.Action("SearchByFio", "ClientSearch")">
+            <div class="client-input">
+                <label>Фамилия 
+                    <input type="text" name="lastname"/>
+                </label>
+                <label>Имя
+                    <input type="text" name="firstname" value=""/>
+                </label>
+                <label>Отчетство 
+                    <input type="text" name="patrname" value="" />
+                </label>
+                <label>Дата рождения 
+                    <input type="date" name="birthdate" value="00.00.0000">
+                </label>
+            </div>
+            <div class="client-button"><button>Найти клиента</button></div>
         </form>
-    </p>
-    <p>
-        <form class="" method="post" action="@Url.Action("SearchById", "ClientSearch")">
-            <label>Номера клиента ID</label>
-            <input type="number" name="id">
-            <button>Найти клиента по ID</button>
+    </div>
+    <div class="client-form">
+        <form class="form" method="post" action="@Url.Action("SearchById", "ClientSearch")">
+            <div class="client-input">
+                <label>Номера клиента ID 
+                    <input type="number" name="id">
+                </label>
+            </div>
+            <div class="client-button"><button>Найти клиента по ID</button></div>
         </form>
-    </p>
-    <p>
-        <form class="" method="post" action="@Url.Action("SearchByContact", "ClientSearch")">
-            <label>Email</label>
-            <input type="email" name="email">
-            <label>Номер телефона</label>
-            <input type="text" name="phone">
-            <button>Найти клиента по контактным данным</button>
+    </div>
+    <div class="client-form">
+        <form class="form" method="post" action="@Url.Action("SearchByContact", "ClientSearch")">
+            <div>
+                <label>Email
+                    <input type="email" name="email">
+                </label>
+                <label>Номер телефона
+                    <input type="text" name="phone">
+                </label>
+            </div>
+            <div class="client-button"><button>Найти клиента по контактным данным</button></div>
         </form>
-    </p>
+    </div>
 </div>
+
 <div>
-    @if (Model != null)
+    @if (Model.Clients.Count > 0)
     {
-        @if (Model.Clients.Count > 0)
-        {
-            <p>Количество найденных клиентов: @Model.Clients.Count</p>
-            <table>
-                <tr>
-                    <th>Номер клиента ID</th>
-                    <th>Фамилия</th>
-                    <th>Имя</th>
-                    <th>Отчество</th>
-                    <th>Дата рождения</th>
-                    <th>Email</th>
-                    <th>Телефон</th>
+        <p>Количество найденных клиентов: @Model.Clients.Count</p>
+        <table>
+            <tr class="client-row">
+                <th>Номер клиента ID</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Дата рождения</th>
+                <th>Email</th>
+                <th>Телефон</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @foreach (var c in Model.Clients)
+            {
+                <tr class="client-row">
+                    <td class="t1">@c.ID</td>
+                    <td class="t2">@c.LastName</td>
+                    <td class="t1">@c.FirstName</td>
+                    <td class="t2">@c.PatrName</td>
+                    <td class="t1">@c.BirthDate.ToString()</td>
+                    <td class="t2">@c.Email</td>
+                    <td class="t1">@c.Phone</td>
+                    <td class="t2">
+                        <a href="~/ClientSearch/Archive?id=@c.ID">Просмотреть историю</a>
+                    </td>
+                    <td class="t1">
+                        <a href="~/ClientSearch/Result?id=@c.ID">Подобрать туры</a>
+                    </td>
                 </tr>
-                @foreach (var c in Model.Clients)
-                {
-                    <tr>
-                        <td>@c.ID</td>
-                        <td>@c.LastName</td>
-                        <td>@c.FirstName</td>
-                        <td>@c.PatrName</td>
-                        <td>@c.BirthDate.ToString()</td>
-                        <td>@c.Email</td>
-                        <td>@c.Phone</td>
-                        <td><a href="~/ClientSearch/Archive?id=@c.ID">Просмотреть историю</a></td>
-                        <td>
-                            <label>Учитывать оценку клиента по туру</label>
-                            <input type="checkbox" value="false" id = "rateFlag">
-                            <a href="~/ClientSearch/Result?id=@c.ID">Подобрать туры по истории</a>
-                        </td>
-                    </tr>
-                }
-            </table>
-        }
-        else
-        {
-            <p>Клиенты с заданными параметранми не найдены</p>
-        }
+            }
+        </table>
     }
+
 </div>
+<style>
+    ul{
+        list-style-type: none;
+        padding:10px;
+        text-align:center;
+    }
+    .client-form{
+        display:flex;
+        margin: 2px;
+        background: #f1f1f1;
+    }
+
+    .client-button {
+        display: flex;
+        justify-content: left;
+        padding:10px;
+    }
+    .client-input{
+        padding:10px;
+    }
+    .client-row th, .client-row td{
+        background: #f1f1f1;
+        padding: 10px;
+        border: 1px black;
+    }
+    .t1{
+        background: #c9c9c9;
+    }
+    .t2{
+        background: #f5f5f5;
+    }
+</style>

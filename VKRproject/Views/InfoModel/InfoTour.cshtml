@@ -1,6 +1,82 @@
 ﻿@model InfoModelViewModel;
 
 <div>
-    <h1>Тур</h1>
-    @Model.Tour.ID
+    @if (Model.Tour != null)
+    {
+        <div>
+            <h4>Тур № <label>@Model.Tour.ID</label></h4>
+            <ul class="tour-element">
+                <li class="element-name">Наименование (краткое описание): <label>@Model.Tour.Name</label></li>
+                <li class="element-name">Туроператор: <label><a href="~/InfoModel/InfoTourOperator?id=@Model.Tour.TourOperator.ID">@Model.Tour.TourOperator.Name</a></label></li>
+                <li>
+                    <ul class="tour-element">
+                        <li>Дата вылета (туда): <label>@Model.Tour.DateStart</label></li>
+                        <li>Дата вылета (обратно): <label>@Model.Tour.DateFinish</label></li>
+                        <li>Город вылета: <label>
+                                <a href="~/InfoModel/InfoDepCity?id=@Model.Tour.DepCity.ID">@Model.Tour.DepCity.Name</a>
+                            </label>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Cтрана: <a href="~/InfoModel/InfoCountry?id=@Model.Tour.Country.ID"><label>@Model.Tour.Country.Name</label></a>
+                    @if (Model.Tour.Country.Visa)
+                    {
+                        <div>Требуется получение визы для данной страны</div>
+                    }
+                    else
+                    {
+                        <div>Виза не требуется</div>
+                    }
+                </li>
+                <li>Город: <label>
+                        <a href="~/InfoModel/InfoCity?id=@Model.Tour.City.ID">@Model.Tour.City.Name</a>
+                    </label>
+                </li>
+                <li>Туристы: 
+                    <ul>
+                        <li>Количество взрослых: <label>@Model.Tour.AdultsCount</label></li>
+                        <li>Количество детей: <label>@Model.Tour.ChildCount</label></li>
+                    </ul>
+                </li>
+                <li>Описание на сайте туроператора: <label>
+                    <a href="@Model.Tour.OpLinks">Открыть</a>
+                </label>
+
+                </li>
+                <li>
+                    <label class="element-name">
+                        Отель:
+                        <a href="~/InfoModel/InfoHotel?id=@Model.Tour.Hotel.ID">@Model.Tour.Hotel.Name</a>
+                    </label>
+                    <ul>
+                        <li>Количество ночей: <label>@Model.Tour.NightsCount</label></li>
+                        <li>Категория отеля: <label>@Model.Tour.Hotel.Category</label></li>
+                        <li>Категория номера: <label>@Model.Tour.Room</label></li>
+                        <li>Тип питания: <label>@Model.Tour.MealType.Code Описание: @Model.Tour.MealType.Description</label></li>
+                        <li>Тип размещения: <label>@Model.Tour.AccomType.Code Описание: @Model.Tour.AccomType.Description</label></li>
+                    </ul>
+                </li>
+                <li class="element-name">Стоимость тура: <label id="price">от @Model.Tour.Price</label></li>
+                <li>
+                    <button>Забронировать у туроператора</button>
+                </li>
+            </ul>
+
+        </div>
+    }
 </div>
+<style>
+
+    .element-name{
+        font-size:16pt;
+        font-weight:inherit;
+    }
+    #price{
+        font-size: 16pt;
+        font-weight: bold;
+    }
+    ul {
+        list-style-type: none;
+    }
+</style>

@@ -1,33 +1,75 @@
 ﻿@model List<ShortTour>
 
+<div>Количество найденных туров: @Model.Count</div>
+<div><button>Поделиться подборкой</button></div>
+<div>
+@if(Model != null)
+    @if(Model.Count > 0)
+    {
+        <ul class="tour-list">
+            @foreach(var t in Model)
+            {
+                <li>
+                    <div class="tour-element">
+                        <div class="tour-img"><img src="@t.ImgLink" width="200" height="150"/></div>
+                        <div class="tour-info">
+                            <ul class="tour-attributes">
+                                <li id="tour-name">@t.Name</li>
+                                <li id="tour-hotel">Отель: <a href="~/InfoModel/InfoHotel?id=@t.Hotel.ID">@t.Hotel.Name (@t.Hotel.Category)</a></li>
+                                <li id="tour-city">Город: <a href="~/InfoModel/InfoCity?id=@t.City.ID">@t.City.Name</a></li>
+                                <li id="tour-date">@t.DateStart - @t.DateFinish</li>
+                                <li id="tour-price">от @t.Price руб.</li>
+                                <li id="tour-button">
+                                        <button action="location.href='@Url.Action("InfoTour", "InfoModel", new {id = t.ID})'">Открыть описание</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+
+</div>
 <style>
     ul {
         list-style-type: none;
     }
+    .tour-element{
+        display:flex;
+        background:#f1f1f1;
+        margin:2px;
+    }
+    .tour-img{
+        width:20%;
+        
+    }  
+    .tour-info{
+        width:80%;
+    }
+    .tour-attributes li{
+        display:flex;
+    }
+    #tour-name{
+        font-size:18pt;
+        font-weight:inherit;
+    }
+    #tour-hotel{
+        font-size:16pt;
+    }
+    #tour-date{
+        font-size:16pt;
+    }
+    #tour-price{
+        font-size:20pt;
+        font-weight:bold;
+        display:flex;
+        justify-content:right;
+    }
+    #tour-button{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
 </style>
-
-<div>Количество найденных туров: @Model.Count</div>
-<div>
-    @if(Model != null)
-        @if(Model.Count > 0)
-        {
-            <ul>
-                @foreach(var t in Model)
-                {
-                    <li>
-                        <div>
-                            <div><img src="@t.ImgLink" /></div>
-                            <label>Название: @t.Name</label>
-                            <label>Город: <a href="~/InfoModel/InfoCity?id=@t.City.ID">@t.City.Name</a></label>
-                            <label>Отель: <a href="~/InfoModel/InfoHotel?id=@t.Hotel.ID">@t.Hotel.Name (@t.Hotel.Category)</a></label>
-                            <label>Дата вылета: @t.DateStart</label>
-                            <label>Дата вылета обратно: @t.DateFinish</label>
-                            <div>@t.Price</div>
-                            <div><button href="~/InfoModel/InfoTour?id=@t.ID">Описание тура</button></div>
-                        </div>
-                    </li>
-                }
-            </ul>
-        }
-    </div>
 

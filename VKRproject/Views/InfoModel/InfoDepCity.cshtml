@@ -1,6 +1,48 @@
 ﻿@model InfoModelViewModel;
 
-<div>
-    <h1>Город вылета</h1>
-
-</div>
+@if (Model.DepCity != null)
+{
+    <div>
+        <h4>Город вылета: <label>@Model.DepCity.Name</label></h4>
+        <ul>
+            <li>ID: <label>@Model.DepCity.ID</label></li>
+            <li>
+                Страна: <a href="~/InfoModel/InfoCountry?id=@Model.DepCity.Country.ID"><label>@Model.DepCity.Country.Name</label></a>
+            </li>
+            <li>Популярность города вылета (согласно аналитике Sletat.ru): <label>@ViewBag.Popular</label></li>
+            <li>
+                <h5>Обслуживающие аэропорты:</h5>
+                @if(Model.DepCity.Airport != null)
+                {
+                    @foreach(var a in Model.DepCity.Airport)
+                    {
+                        <ul class="airport-block">
+                            <li class="airport-name">Наименование: @a["Name"].ToString()</li>
+                            <li>Код: @a["Alias"].ToString()</li>
+                            <li>Тип: @a["Type"].ToString()</li>
+                            <li>Адрес: @a["Adress"].ToString()</li>
+                            <li>Сайт: <a href="@a["Url"].ToString()">Перейти</a></li>
+                            <li>Онлайн табло: <a href="@a["LiveUrl"].ToString()">Перейти</a></li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <div>Аэропорты не найдены</div>
+                }
+            </li>
+        </ul>
+    </div>
+}
+<style>
+     .airport-name{
+        font-size: 16pt;
+        font-weight:bold;
+    }
+    .airport-block{
+        padding:5px;
+    }
+    ul {
+        list-style-type: none;
+    }
+</style>

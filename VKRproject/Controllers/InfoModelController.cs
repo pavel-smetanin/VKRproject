@@ -23,12 +23,14 @@ namespace VKRproject.Controllers
         public IActionResult InfoCountry(int id)
         {
             model.Country = ModelTool.GetCountryFromDb(id);
+            ViewBag.Visa = model.Country.Visa ? "Требуется виза" : "Виза не требуется";
             return View(model);
         }
         [HttpGet]
         public IActionResult InfoCity(int id)
         {
             model.City  = ModelTool.GetCityFromDb(id);
+            ViewBag.Popular = model.City.Popular ? "Популярен" : "Не популярен";
             return View(model);
         }
         [HttpGet]
@@ -41,6 +43,7 @@ namespace VKRproject.Controllers
         public IActionResult InfoDepCity(int id)
         {
             model.DepCity = ModelTool.GetDepCityFromDb(id);
+            ViewBag.Popular = model.DepCity.Popular ? "Популярен" : "Не популярен";
             return View(model);
         }
         [HttpGet]

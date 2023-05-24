@@ -1,7 +1,25 @@
 ﻿@model InfoModelViewModel;
 
-<h1>Туроператор </h1>
-
 <div>
+    @if (Model.TourOperator != null)
+    {
+        <div>
+            <h4>Туроператор: <label>@Model.TourOperator.Name</label></h4>
+            <ul>
+                <li>ID: <label>@Model.TourOperator.ID</label></li>
+                <li>ИНН: <label>@Model.TourOperator.Inn</label></li>
+                <li>Номер агентского договора: <label>@Model.TourOperator.ContractNum</label></li>
+                <li>Адрес центрального офиса: <label>@Model.TourOperator.Adress</label></li>
+                <li>Email: <label>@Model.TourOperator.Email</label></li>
+                <li>Телефон для связи: <label>@Model.TourOperator.Phone</label></li>
+                <li>Официальный сайт: <label>@Model.TourOperator.SiteLink</label></li>
+            </ul>
 
+        </div>
+    }
 </div>
+<style>
+    ul {
+        list-style-type: none;
+    }
+</style>

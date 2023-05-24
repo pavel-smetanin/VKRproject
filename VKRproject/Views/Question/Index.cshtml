@@ -1,17 +1,37 @@
 ﻿@using VKRproject.Models.ViewModels;
+@using VKRproject.Tools;
 @model SearchViewModel
-<div>
-    <label>Анкета через телеграм бот</label>
-    <button onclick="location.href = '@Url.Action("Start", "Question")'">Открыть анкету</button>
-    <button onclick="location.href = '@Url.Action("Finish", "Question")'">Закрыть анкету</button>
-</div>
-<div>
-    @if(ViewBag.Code != null)
-    {
-        <label>Бот активирован</label>
-        <label>Код активации анкеты: @ViewBag.Code</label>
+<div class="bot-form">
+    <div id="bot-qr">
+        <img id="qr-img" sqc="../Contents/BotQR.png" />
+    </div>
+    <div id="bot-panel">
+        <div class="bot-info">
+            <div class="bot-button">
+                <button onclick="location.href = '@Url.Action("Start", "Question")'">Открыть анкету</button>
+            </div>
+            <div class="bot-button">
+                <button onclick="location.href = '@Url.Action("Finish", "Question")'">Закрыть анкету</button>
+            </div>
+        </div>
+        <div class="bot-info">
+            <div id="bot-url">
+                <label>
+                    Ссылка на бот: <label>@ViewBag.BotUrl</label>
+                </label>
+            </div>
+            <div id="bot-status">
+                @if(ViewBag.Code != null)
+                {
+                    <ul>
+                        <li>Статус анкеты: <label>БОТ АКТИВИРОВАН</label></li>
+                        <li>Код активации анкеты: <label>@ViewBag.Code</label></li>
+                    </ul>
+                }
+            </div>
+        </div>
         
-    }
+    </div>
 </div>
 <div>
     @if (ViewBag.ResultMessage != null)
@@ -19,67 +39,46 @@
         <label>@ViewBag.ResultMessage</label>
     }
 </div>
-@{/*
-<div>
-    @if (Model != null && Model.Tours != null)
-    {
-        <p>Сессия анкеты закрыта</p>
-        <p>Количество найденных туров @Model.Tours.Count</p>
-        <form method="post">
-            <p>
-                <label>Отправить подборку</label>
-            </p>
-            <p>
-                <label>На email</label>
-                <input type="email" name="email" />
-                <button>Отправить подборку на email</button>
-            </p>
-            <p>@ViewBag.EmailMessage</p>
-        </form>
-        <table>
-            <tr>
-                <th>ID тура</th>
-                <th>Туроператора</th>
-                <th>ID отеля</th>
-                <th>Город</th>
-                <th>Направление (страна)</th>
-                <th>Название тура</th>
-                <th>Тип номера</th>
-                <th>Тип питания</th>
-                <th>Тип размещения</th>
-                <th>Дата вылета</th>
-                <th>Дата вылета обратно</th>
-                <th>Количество ночей</th>
-                <th>Количество взрослых</th>
-                <th>Количество детей</th>
-                <th>Ссылка на тур</th>
-                <th>Ссылка на изображение</th>
-                <th>Город вылета</th>
-                <th>Цена (руб.)</th>
-            </tr>
-            @foreach (var t in Model.Tours)
-            {
-                <tr>
-                    <td>@t.ID</td>
-                    <td>@t.TourOperator.Name</td>
-                    <td>@t.Hotel.ID</td>
-                    <td>@t.City.Name</td>
-                    <td>@t.Country.Name</td>
-                    <td>@t.Name</td>
-                    <td>@t.Room</td>
-                    <td>@t.MealType.Code</td>
-                    <td>@t.AccomType.Code</td>
-                    <td>@t.DateStart</td>
-                    <td>@t.DateFinish</td>
-                    <td>@t.NightsCount</td>
-                    <td>@t.AdultsCount</td>
-                    <td>@t.ChildCount</td>
-                    <td><a src="https:/@t.OpLinks">Перейти к бронированию</a></td>
-                    <td><img src="@t.ImgLink" /></td>
-                    <td>@t.DepCity.Name</td>
-                    <td>@t.Price</td>
-                </tr>
-            }
-        </table>
+<style>
+    .bot-form{
+        background: #f1f1f1;
+        display:flex;
+        margin:10px;
+        
     }
-</div>*/}
+    #bot-qr{
+        width:10%;
+        padding:10px;
+    }
+    #bot-panel{
+        width:85%
+    }
+    .bot-info{
+        display:flex;
+        padding:10px;
+    }
+    .bot-button{
+        width:50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #qr-img{
+        width:100px;
+        height:100px;
+    }
+    #bot-status{
+        width:50%;
+        display:flex;
+        justify-content: right;
+    }  
+    #bot-url{
+        width:50%;
+        display:flex;
+        justify-content: center;
+        vertical-align:central;
+    }
+    ul {
+        list-style-type: none;
+    }
+</style>

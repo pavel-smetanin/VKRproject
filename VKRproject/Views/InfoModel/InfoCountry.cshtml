@@ -1,1 +1,34 @@
 ﻿@model InfoModelViewModel;
+
+@if(Model.Country != null)
+{
+    <div>
+        <h4>Страна (направление): <label>@Model.Country.Name </label></h4>
+        <ul>
+            <li>ID: <label>@Model.Country.ID</label></li>
+            <li>Код страны: <label>@Model.Country.Alias</label></li>
+            <li>Требование визы для граждан РФ: <label>@ViewBag.Visa</label></li>
+            <li>
+                <h5>Валюта</h5>
+                <ul>
+                    <li>Наименование: <label>@Model.Country.CurrencyInfo["Name"].ToString()</label></li>
+                    <li>Код: <label>@Model.Country.CurrencyInfo["Alias"].ToString()</label></li>
+                    <li>Курс валюты: <label><a href="@Model.Country.CurrencyInfo["Url"].ToString()">Покупка и продажа</a></label></li>
+                </ul>
+
+            </li>
+        </ul>
+    </div>
+}
+
+
+<style>
+    ul {
+        list-style-type: none;
+    }
+
+    label {
+        font-weight: bold;
+        
+    }
+</style>

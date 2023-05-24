@@ -1,6 +1,7 @@
 VKRproject.sln
 .vs
 VKRproject/bin
+VKRproject/Contents
 VKRproject/obj
 VKRproject/wwwroot/lib
 VKRproject/Properties/privateConfig.json
