@@ -22,8 +22,16 @@
     </ul>
 </div>
 <div>
-    <p>Для изменения данных пользователя воспользуйтесь личным кабинетом сотрудника агентсва! <a>Перейти в личный кабинет</a></p>
+    <p>Для изменения данных пользователя воспользуйтесь личным кабинетом сотрудника агентсва!</p>
 </div>
 <div>
-    <button action="@Url.Action("Exit", "Authorization")">Выход</button>
+    <a href="@Url.Action("Exit", "Authorization")">
+        <input type="submit" value="Выход"/>
+    </a>
 </div>
+
+<style>
+    ul {
+        list-style-type: none;
+    }
+</style>

@@ -22,7 +22,7 @@ namespace VKRproject.Modules
         }
         public void InitUser(string login, string password)
         {
-            string sqlStr = $"SELECT a.empl_id, a.role, e.last_name, e.first_name, e.patr_name, e.position " +
+            string sqlStr = $"SELECT a.empl_id, a.role, e.last_name, e.first_name, e.patr_name, e.position, e.phone, e.email " +
                 $"FROM auth_data a JOIN employees e ON a.empl_id = e.ID " +
                 $"WHERE a.login = '{login}' AND a.password = '{password}'";
             DbTool.OpenDbConnection();
@@ -38,6 +38,8 @@ namespace VKRproject.Modules
                     user.Employee.FirstName = reader[3].ToString();
                     user.Employee.PatrName = reader[4].ToString();
                     user.Employee.Position = reader[5].ToString();
+                    user.Employee.Phone = reader[6].ToString();
+                    user.Employee.Email = reader[7].ToString();
                 }
                 reader.Close();
                 DbTool.CloseDbConnection();

@@ -7,25 +7,32 @@ namespace VKRproject.Modules
     public class DataUpdaterModule
     {
         public static DateTime DateUpdate { get; private set; }
-        public static int CountTours { get; private set; } = 0;
-        public static int CountHotels { get; private set; } = 0;
-        public static int CountCities { get; private set; } = 0;
+        public static int CountTours { get; private set; } = 300;
+        public static int CountHotels { get; private set; } = 100;
+        public static int CountCities { get; private set; } = 100;
         public static bool ErrorFlag { get; private set; } = false;
         public async Task Run()
         {
             try
             {
+                Console.WriteLine($"{DateTime.Now}: The DataUpdater module is started!");
+                Console.WriteLine($"Using URL and method of API: {ConfigProvider.Configuration["Api:UrlName"]}");
                 string sqlCities = await LoadCities();
                 string sqlHotels = await LoadHotels();
                 string sqlTours = await LoadTours();
                 UpdateData(sqlCities, sqlHotels, sqlTours);
                 DateUpdate = DateTime.Now;
-                Console.WriteLine(DateUpdate + " DataUpdater: the data of tours is update!");
+                Console.WriteLine(DateUpdate + ": the data is update!");
+                Console.WriteLine($"Loaded from API and updated in DB: {CountTours} tours; {CountHotels} hotels; {CountCities} cities");
             }
             catch (Exception ex) 
             {
                 Console.WriteLine($"{DateTime.Now} DataUpdater: erorr " + ex.Message);
                 ErrorFlag = true;
+            }
+            finally
+            {
+                Console.WriteLine($"{DateTime.Now}: The DataUpdater module is finished!");
             }
         }
         private async Task<string> LoadCities()
@@ -149,7 +156,7 @@ namespace VKRproject.Modules
                 DbTool.OpenDbConnection();
                 string sqlScript = "BEGIN;";
                 sqlScript += " DELETE FROM tours_data; DELETE FROM hotels_data; DELETE FROM cities_data; " +
-                    $"{sqlCities} + {sqlHotels} + {sqlTours} ";
+                    $"{sqlCities} {sqlHotels} {sqlTours} ";
                 sqlScript += " COMMIT; ";
                 DbTool.ExcecuteQueryNonResultAndOpen(sqlScript);
             }

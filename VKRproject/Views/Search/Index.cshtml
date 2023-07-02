@@ -11,7 +11,12 @@
     }
 </script>
 
-<table class="search-form">
+
+<div class="search-form">
+    @if(ViewBag.ValidMessage != null)
+    {
+        @ViewBag.ValidMessage;
+    }
     <form class="" method="get" action="@Url.Action("SearchByFilter","Search")">
         <u class="form-list">
             <li>
@@ -27,6 +32,16 @@
             </li>
             <li>
                 <div>
+                    <label>Город (Курорт)
+                        <select name="city">
+                            <option>Все города</option>
+                            <option>Город №1</option>
+                        </select>
+                    </label>
+                </div>
+            </li>
+            <li>
+                <div>
                     <label>
                         Город вылета
                         <select name="DepCityId">
@@ -36,20 +51,20 @@
                             }
                         </select>
                     </label>
-                    <label>Все города вылета<input type="checkbox" name="DepCityFlag" /></label>
+                    <label>Все города вылета<input type="checkbox" name="DepCityFlag" value="true"/></label>
                 </div>
             </li>
             <li>
                 <div>
                     <label>Туроператор 
-                        <select name = "OperatorsId" multiple>
+                        <select name = "OperatorsId">
                             @foreach(var op in Model.OperatorsDict)
                             {
                                 <option value="@op.Key">@op.Value</option>
                             }
                         </select>
                     </label>
-                    <label>Все операторы<input type="checkbox" name="OpFlag"/></label>
+                    <label>Все операторы<input type="checkbox" name="OpFlag" value="true" checked/></label>
                 </div>
             </li>
             <li>
@@ -94,6 +109,16 @@
             </li>
             <li>
                 <div>
+                    <label>Отель 
+                        <select name="hotel">
+                            <option>Все отели</option>
+                            <option>Отель №1</option>
+                        </select>
+                    </label>
+                </div>
+            </li>
+            <li>
+                <div>
                     <label>Категория отеля
                         <select name="Category">
                             <option value="1*">1 звезда</option>
@@ -105,7 +130,7 @@
                             <option value="Без звезд">Без звезд</option>
                         </select>
                     </label>
-                    <label>Учитывать все категории<input type="checkbox" name="CategoryFlag" /></label>
+                    <label>Учитывать все категории<input type="checkbox" name="CategoryFlag" value="true" checked/></label>
                 </div>
             </li>
             <li>
@@ -121,7 +146,7 @@
                             <option value="5.0">От 5.0</option>
                         </select>
                     </label>
-                    <label>Не учитывать рейтинг отеля <input type="checkbox" name="RateFlag" /></label>
+                    <label>Не учитывать рейтинг отеля <input type="checkbox" name="RateFlag" value="true"/></label>
                 </div>
             </li>
             <li>
@@ -134,7 +159,20 @@
                             }
                         </select>
                     </label>
-                    <label>Не учитывать тип питания <input type="checkbox" name="MealFlag"/></label>
+                    <label>Не учитывать тип питания <input type="checkbox" name="MealFlag" value="true" checked/></label>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <label>Тип размещения в отеле 
+                        <select name="AccomCode">
+                            @foreach(var a in Model.AccomsType)
+                            {
+                                <option value="@a.Code">@a.Code - @a.Description</option>
+                            }
+                        </select>
+                    </label>
+                    <label>Не учитывать тип размещения <input type="checkbox" name="AccomFlag" value="true" checked/></label>
                 </div>
             </li>
             <li>
@@ -152,7 +190,7 @@
             </li>
         </u>
     </form>
-</table>
+</div>
 <br />
 @if (Model.Tours.Count > 0)
 {

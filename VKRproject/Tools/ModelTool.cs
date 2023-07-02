@@ -49,6 +49,19 @@ namespace VKRproject.Tools
         {
             List<ModelType> mealsType = new List<ModelType>();
             string sql = "SELECT code, description FROM meals_type;";
+            mealsType = GetModelTypesFromDb(sql);
+            return mealsType;
+        }
+        public static List<ModelType> GetAccomsType()
+        {
+            List<ModelType> accomsType = new List<ModelType>();
+            string sql = "SELECT code, description FROM accoms_type;";
+            accomsType = GetModelTypesFromDb(sql);
+            return accomsType;
+        }
+        private static List<ModelType> GetModelTypesFromDb(string sql)
+        {
+            List<ModelType> resultList = new List<ModelType>();
             DbTool.OpenDbConnection();
             var reader = DbTool.ExcecuteQueryWithResult(sql);
             if (reader.HasRows)
@@ -58,12 +71,12 @@ namespace VKRproject.Tools
                     ModelType type = new ModelType();
                     type.Code = reader[0].ToString();
                     type.Description = reader[1].ToString();
-                    mealsType.Add(type);
+                    resultList.Add(type);
                 }
             }
             reader.Close();
             DbTool.CloseDbConnection();
-            return mealsType;
+            return resultList;
         }
         
         public static Tour GetTourFromDb(string tourId)

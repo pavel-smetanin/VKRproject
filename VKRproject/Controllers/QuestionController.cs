@@ -23,6 +23,7 @@ namespace VKRproject.Controllers
         public IActionResult Start()
         {
             BotModule = new TelegramModule();
+            ViewBag.BotUrl = ConfigProvider.PrivateConfig["Telegram:BotUrl"];
             BotModule.StartBot();
             ViewBag.Code = BotModule.Code;
             //Session = BotModule.Code;
@@ -30,6 +31,7 @@ namespace VKRproject.Controllers
         }
         public IActionResult Finish()
         {
+            ViewBag.BotUrl = ConfigProvider.PrivateConfig["Telegram:BotUrl"];
             BotModule.FinishBot();
             if (BotModule.Filter.IsFieldFill())
             {

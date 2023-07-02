@@ -4,6 +4,7 @@ using VKRproject.Models;
 using VKRproject.Models.ViewModels;
 using VKRproject.Modules;
 using VKRproject.Tools;
+using System.ComponentModel.DataAnnotations;
 
 namespace VKRproject.Controllers
 {
@@ -14,12 +15,13 @@ namespace VKRproject.Controllers
 
         public SearchController(ILogger<SearchController> logger)
         {
-            _logger = logger;
+            _logger = logger;  
             Model.CountriesDict = ModelTool.GetCountriesDict();
             Model.Tours = new List<ShortTour>();
             Model.OperatorsDict = ModelTool.GetOperatorsDict();
             Model.DepCitiesDict = ModelTool.GetDepCitiesDict();
             Model.MealsType = ModelTool.GetMealsType();
+            Model.AccomsType = ModelTool.GetAccomsType();
             Model.User = AuthorizationModule.AuthUser;
         }
         [HttpGet]
@@ -30,13 +32,13 @@ namespace VKRproject.Controllers
             return View(Model);
         }
         [HttpGet]
-        public IActionResult SearchByFilter(Filter f)
+        public IActionResult SearchByFilter(Filter filter)
         {
-            f = new Filter();
+            /*var f = new Filter();
             f.CountryId = 40;
             f.OperatorsId = new List<int> { 9, 38, 54 };
-            f.DateLower = "2014-01-01";
-            f.DateUpper = "2015-01-01";
+            f.DateLower = "2023-01-01";
+            f.DateUpper = "2024-01-01";
             f.PriceLower = 100;
             f.PriceUpper = 100000;
             f.MinNightsCount = 1;
@@ -45,14 +47,26 @@ namespace VKRproject.Controllers
             f.ChildCount = 0;
             f.DepCityId = 832;
             f.MealCode = "AI";
-            f.Category = "5*";
+            f.Category = "3*";
             f.Rate = 1.0;
+            filter = f;*/
+            var context = new ValidationContext(filter);
+            var errors = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(filter, context, errors))
+            {
+                string text = "";
+                foreach (var e in errors)
+                    text += e.ErrorMessage + " \n";
+                ViewBag.ValidMessage = text;
+                return View("Index", Model);
+            }
             SearchModule module = new SearchModule();
-            Model.Tours = module.SearchToursByFilter(f);
+            Model.Tours = module.SearchToursByFilter(filter);
             return View("Index", Model);
         }
+
         [HttpPost]
-        public async Task<IActionResult> Index(string email)
+        public async Task<IActionResult> EmailSend(string email)
         {
             EmailModule module = new EmailModule();
             var tours = Model.Tours;

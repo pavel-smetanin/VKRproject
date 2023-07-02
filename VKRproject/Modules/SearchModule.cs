@@ -13,32 +13,32 @@ namespace VKRproject.Modules
         {
 
             List<ShortTour> shortTours = new List<ShortTour>();
-            string sql = SqlConstructor.ForShortToursTabJoin(toursTab) + $"WHERE t.country_id = 40 " +
-                $"AND ('{filter.DateLower}' AND date_start <= '{filter.DateUpper}') " +
+            string sql = SqlConstructor.ForShortToursTabJoin(toursTab) + $"WHERE t.country_id = {filter.CountryId} " +
+                $"AND (date_start >= '{filter.DateLower}' AND date_start <= '{filter.DateUpper}') " +
                 $"AND (nights_count >= {filter.MinNightsCount} AND nights_count <= {filter.NightsCount}) " +
                 $"AND adults_count = {filter.AdultsCount} AND child_count = {filter.ChildCount} " +
                 $"AND (price >= {filter.PriceLower} AND price <= {filter.PriceUpper}) ";   
-            if(filter.OpFlag)
+            if(!filter.OpFlag)
             {
                 sql += $" AND t.op_id IN ({SqlConstructor.ListInStr<int>(filter.OperatorsId)}) ";
             }
-            if(filter.DepCityFlag)
+            if(!filter.DepCityFlag)
             {
                 sql += $" AND t.dep_city_id = {filter.DepCityId} ";
             }
-            if(filter.MealFlag)
+            if(!filter.MealFlag)
             {
                 sql += $" AND t.meal_code = '{filter.MealCode}' ";
             }
-            if(filter.CategoryFlag)
+            if(!filter.CategoryFlag)
             {
                 sql += $" AND h.category = '{filter.Category}'";
             }
-            if(filter.RateFlag)
+            if(!filter.RateFlag)
             {
                 sql += $" AND h.rate >= {filter.Rate} ";
             }
-            sql += $" ORDER BY date_start ASC;";
+             sql += $" ORDER BY date_start ASC;";
             shortTours = GetToursListFromDb(sql);
             return shortTours;
         }

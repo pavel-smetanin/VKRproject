@@ -10,5 +10,6 @@ namespace VKRproject.Models.ViewModels
         public Dictionary<int, string> OperatorsDict { get; set; } = new Dictionary<int, string>();
         public Dictionary<int, string> DepCitiesDict { get; set; } = new Dictionary<int, string>();
         public List<ModelType> MealsType { get; set; } = new List<ModelType>();
+        public List<ModelType> AccomsType { get; set; } = new List<ModelType>();
     }
 }

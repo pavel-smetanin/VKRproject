@@ -1,14 +1,20 @@
-﻿namespace VKRproject.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace VKRproject.Models
 {
     public class Filter: BaseFilter
     {
         public int CountryId { get; set;}
-        public bool OpFlag { get; set; } 
-        public List<int> OperatorsId { get; set;}
+        public bool OpFlag { get; set; }
+        public List<int> OperatorsId { get; set; } = new List<int>();
         public bool DepCityFlag { get; set; }
         public int DepCityId { get; set; }
+
+        [Required(ErrorMessage = "Дата вылета должна быть заполнена")]
         public string DateLower { get; set ; }
+
+        [Required(ErrorMessage = "Дата вылета обратно должна быть заполнена")]
         public string DateUpper { get; set; }
+
         public int MinNightsCount { get; set; }
         public int PriceLower { get; set; }
         public int PriceUpper { get; set; }

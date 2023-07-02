@@ -7,7 +7,7 @@ namespace VKRproject.Modules
 {
     public class EmailModule
     {
-        public async Task SendToursByEmail(List<Tour> toursList, string destEmail)
+        public async Task SendToursByEmail(List<ShortTour> toursList, string destEmail)
         {
             try
             {
@@ -30,12 +30,12 @@ namespace VKRproject.Modules
                 throw new Exception("Send message to email is failed! " + ex.Message);
             }
         }
-        private string CreateMessageStr(List<Tour> tours)
+        private string CreateMessageStr(List<ShortTour> tours)
         {
             string result = "<div><ul>";
             foreach(var t in tours)
             {
-                result += $"<li>{t.Name} {t.TourOperator.ID} Направление: {t.Country.ID} Город: {t.City.ID} Дата вылета: {t.DateStart} Цена: {t.Price}</li>";
+                result += $"<li>{t.Name} Город: {t.City.Name} Дата вылета: {t.DateStart} Цена: {t.Price}</li>";
             }
             result += "</li></div>";
             return result;

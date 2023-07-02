@@ -1,7 +1,4 @@
-﻿using MySql.Data;
-using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Tls;
-using System.Configuration;
+﻿using MySql.Data.MySqlClient;
 
 namespace VKRproject.Tools
 {

@@ -130,14 +130,14 @@ namespace VKRproject.Modules
                 if (UserCheck == true) //Диалог
                 {
                     
-                    /*if (DialogStatus == 1)
+                    if (DialogStatus == 1)
                     {
                         //Filter.CountryName = e.Message.Text;
                         await Client.SendTextMessageAsync(e.Message.Chat.Id, "Введите желаемые даты периодов тура. Вводите даты в формате чч.мм.гггг");
                         await Client.SendTextMessageAsync(e.Message.Chat.Id, "Период вылета. Введите дату начала периода вылета:");
                         DialogStatus = 2;
                         return;
-                    }*/
+                    }
                     if (DialogStatus == 2)
                     {
                         Filter.StartDateLower = e.Message.Text;

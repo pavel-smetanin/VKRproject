@@ -1,7 +1,46 @@
 ﻿@model List<ShortTour>
 
+<script>
+	function hiddenCloseclick() {
+	    let x = document.getElementById('hidden-element');
+        if (x.style.display == "none"){
+	        x.style.display = "block";
+	    } else {
+	        x.style.display = "none"}
+    };
+</script>
+
 <div>Количество найденных туров: @Model.Count</div>
-<div><button>Поделиться подборкой</button></div>
+<div id = "send-block">
+    <div id="send-button">
+        <button id="click-to-hide" onclick="hiddenCloseclick();">Поделиться подборкой</button>
+    </div>
+    <div id="hidden-element">
+        <form>
+            <ul class="email">
+                <li>
+                    <h5>Отправить подборку на email</h5>
+                </li>
+                <li>
+                    <label>Адрес получателя <br /><input type="text" placeholder="example@mail.ru"/></label>
+                </li>
+                <li>
+                    <label>Количество туров в подборке: <br /><input type="number" value="@Model.Count" min="1" /></label>
+                </li>
+                <li>
+                    <label>Тема сообщения: <br /><input type="text" /></label>
+                </li>
+                <li>
+                    <label>Текст описания: <br /><textarea type="text" rows="5" cols="23">Ваша персональная подборка туров</textarea></label>
+                </li>
+                <li>
+                    <button>Отправить подборку на email</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+    
 <div>
 @if(Model != null)
     @if(Model.Count > 0)
@@ -20,7 +59,9 @@
                                 <li id="tour-date">@t.DateStart - @t.DateFinish</li>
                                 <li id="tour-price">от @t.Price руб.</li>
                                 <li id="tour-button">
-                                        <button action="location.href='@Url.Action("InfoTour", "InfoModel", new {id = t.ID})'">Открыть описание</button>
+                                    <a href = "~/InfoModel/InfoTour?id=@t.ID">
+                                        <input type="submit" value="Описание тура"/>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -28,6 +69,9 @@
                 </li>
             }
         </ul>
+        <div>
+            
+        </div>
     }
 
 </div>
@@ -70,6 +114,14 @@
         display:flex;
         justify-content:center;
         align-items:center;
+    }
+    .email li{
+        display:flex;
+        background: #f1f1f1;
+        margin: 2px;
+    }
+    #hidden-element{
+        display: none;
     }
 </style>
 

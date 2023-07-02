@@ -61,19 +61,19 @@
     <h2>Минимальные и максимальные показатели</h2>
     <div>
         <label>Максимальное количество ночей: @Model.MaxNightsCount.Value</label>
-        <label>Тур: @Model.MaxNightsCount.Key</label>
+        <label>Тур: <a href="~/InfoModel/InfoTour?id=@Model.MaxNightsCount.Key">@Model.MaxNightsCount.Key</a></label>
     </div>
     <div>
         <label>Минимальное количество ночей: @Model.MinNightsCount.Value</label>
-        <label>Тур: @Model.MinNightsCount.Key</label>
+        <label>Тур: <a href="~/InfoModel/InfoTour?id=@Model.MinNightsCount.Key">@Model.MinNightsCount.Key</a></label>
     </div>
     <div>
         <label>Максимальная стоимость тура: @Model.MaxPrice.Value</label>
-        <label>Тур: @Model.MaxPrice.Key</label>
+        <label>Тур: <a href="~/InfoModel/InfoTour?id=@Model.MaxPrice.Key">@Model.MaxPrice.Key</a></label>
     </div>
     <div>
         <label>Минимальная стоимость тура: @Model.MinPrice.Value</label>
-        <label>Тур: @Model.MinPrice.Key</label>
+        <label>Тур: <a href="~/InfoModel/InfoTour?id=@Model.MinPrice.Key">@Model.MinPrice.Key</a></label>
     </div>
 </div>
 <div>
